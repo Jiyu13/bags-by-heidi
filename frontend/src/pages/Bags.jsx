@@ -1,41 +1,53 @@
-
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 
 import styled from "styled-components";
 import {UserContext} from "../user-content/UserContent";
 import {useNavigate, useParams} from "react-router-dom";
 import BagItem from "../components/bags-page/BagItem";
+import {publicApi} from "../api";
 
 
 export default function Bags() {
 
-    const { category_name, category_id } = useParams()
+    const [items, setItems] = useState(null)
 
 
-    const {products, setProducts} = useContext(UserContext)
+    const { category_name } = useParams()
+
+    useEffect(() => {
+        async function getProductCategories() {
+            try {
+                const res = await publicApi.get(`/products/${category_name}/`)
+                const result = res.data
+                setItems(result)
+            } catch (error) {
+                console.log("failed to get products",  error.response.data)
+            }
+        }
+        getProductCategories()
+    }, [category_name])
+
 
     return (
-        <ProductPageContainer className='product-page-container'>
-            {/*<FilterTriggerMenu*/}
-            {/*    products={products}*/}
-            {/*    // handleSort={handleSort}*/}
-            {/*/>*/}
+        <>
+            {items && (
+                 <ProductPageContainer className='product-page-container'>
+                    <ListContainer className="product-list">
+                        {items?.map((item, i) => {
+                            return (
+                                <BagItem
+                                    key={item.id}
+                                    product={item}
+                                />
+                            )
 
-            <ListContainer className="product-list">
-                {Array.from({ length: 7 }).map((_, i) => {
-                    const product = products?.[0];
-                // {products?.map((product, index) => {
-                    return (
-                        <BagItem
-                            key={{i}}
-                            product={product}
-                        />
-                    )
+                        })}
+                    </ListContainer>
+                </ProductPageContainer>
+            )}
+        </>
 
-                })}
 
-            </ListContainer>
-        </ProductPageContainer>
 
     )
 }
