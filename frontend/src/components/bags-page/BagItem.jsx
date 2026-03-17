@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
-import {cleanCategoryName, lowerCategoryName} from "../../utils/cleanCategoryName";
+import {lowerCategoryName} from "../../utils/cleanCategoryName";
 
 export default function BagItem({product}) {
 
