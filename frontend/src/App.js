@@ -57,18 +57,18 @@ function App() {
     }, [])
 
     // ========================== get products ==========================
-    useEffect(() => {
-        async function getProducts() {
-            try {
-                const res = await publicApi.get("/products/")
-                const products = res.data
-                setProducts(products)
-            } catch (error) {
-                console.log("failed to get products",  error.response.data)
-            }
-        }
-        getProducts()
-    }, [])
+    // useEffect(() => {
+    //     async function getProducts() {
+    //         try {
+    //             const res = await publicApi.get("/products/")
+    //             const products = res.data
+    //             setProducts(products)
+    //         } catch (error) {
+    //             console.log("failed to get products",  error.response.data)
+    //         }
+    //     }
+    //     getProducts()
+    // }, [])
 
    const isTablet = useMediaQuery({query: "(max-width: 1024px)" })
     const isMobile = useMediaQuery({query: "(max-width: 868px)" })
@@ -118,7 +118,7 @@ function App() {
                         <Route exact path='/shop/:category_name' element={<Bags />} />
 
                         <Route exact path="/" element={<Home />}/>
-                        {/*<Route exact path="/bag/:id/:product_name" element={<BagDetailPage />}/>*/}
+                        <Route exact path="/:category_name/:id/:product_name" element={<BagDetailPage />}/>
 
 
                         {/*<Route exact path="*" element={< />}/>*/}
@@ -155,7 +155,7 @@ const Main = styled.main`
     display: flex;
     flex-direction: column;
     flex: 1;
-    justify-content: center;
+    //justify-content: center;
     height: 100%;
 `;
 
