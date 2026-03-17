@@ -5,14 +5,16 @@ import {UserContext} from "../user-content/UserContent";
 import {useNavigate, useParams} from "react-router-dom";
 import BagItem from "../components/bags-page/BagItem";
 import {publicApi} from "../api";
-
+import {Img, Overlay, SectionContent, Title} from "../components/homepage/HomeBanner";
 
 export default function Bags() {
-
+    const {productCategories} = useContext(UserContext)
     const [items, setItems] = useState(null)
 
 
     const { category_name } = useParams()
+    const categoryName = category_name.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+    const currentCategory = productCategories?.filter((p, index) => p.category === categoryName)[0]
 
     useEffect(() => {
         async function getProductCategories() {
@@ -29,23 +31,30 @@ export default function Bags() {
 
 
     return (
-        <>
-            {items && (
-                 <ProductPageContainer className='product-page-container'>
-                    <ListContainer className="product-list">
-                        {items?.map((item, i) => {
-                            return (
-                                <BagItem
-                                    key={item.id}
-                                    product={item}
-                                />
-                            )
+        <ProductPageContainer className='product-page-container'>
+            <ProductPageBannerContainer className="category-cover-image-container">
+                <Img src={currentCategory?.cover_image} alt="category-cover-image" />
+                <Overlay />
+                <ProductPageTittleWrapper>
+                   <ProductPageTittle>{currentCategory?.category}</ProductPageTittle>
+                   {/*<Description>{topBanner?.description}</Description>*/}
+                </ProductPageTittleWrapper>
+            </ProductPageBannerContainer>
 
-                        })}
-                    </ListContainer>
-                </ProductPageContainer>
+            {items && (
+                <ListContainer className="product-list">
+                    {items?.map((item, i) => {
+                        return (
+                            <BagItem
+                                key={item.id}
+                                product={item}
+                            />
+                        )
+
+                    })}
+                </ListContainer>
             )}
-        </>
+        </ProductPageContainer>
 
 
 
@@ -53,11 +62,51 @@ export default function Bags() {
 }
 
 const ProductPageContainer = styled.div`
-  margin: 60px auto 0;
   box-sizing: border-box;
   width: 100%;
-  max-width: 1400px;
+`
+const ProductPageBannerContainer = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d9d9d9;
+  object-fit: cover;
   
+  @media (max-width: 992px) {
+    min-height: 360px;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 300px;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 240px;
+  }
+`
+const ProductPageTittleWrapper = styled(SectionContent)``
+const ProductPageTittle = styled(Title)`
+  font-family: inherit;
+  font-size: 3.5rem;
+  @media (max-width: 992px) {
+    font-size: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2.8rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
+`
+const ListContainer = styled.ul`
+    margin: 60px auto 0;
+
   @media (min-width: 989px) {
       padding: 0 5rem;
   }
@@ -65,13 +114,11 @@ const ProductPageContainer = styled.div`
   @media (max-width: 988px) {
       padding: 0 1.5rem;
   }
-`
-const ListContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   padding: 0;
-  margin: 0;
+  //margin: 0;
   --gap: 1.5rem;
   gap: var(--gap);
 `
