@@ -63,7 +63,7 @@ const ItemCard = styled.div`
 
 const ProductImage = styled.div`
     width: 100%;
-    //aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1;
     background: #fff;
     display: flex;
     align-items: center;
@@ -72,12 +72,13 @@ const ProductImage = styled.div`
 `
 const Img = styled.img`
     cursor: pointer;
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
+    width: 100%;
+    height: 100%;
+  
+    //width: auto;
     display: block;
-    height: auto;
-    object-fit: contain;
+    //height: auto;
+    object-fit: cover;
 `
 
 const ProductContent = styled.div`
