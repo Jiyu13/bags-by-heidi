@@ -1,4 +1,3 @@
-import {ProductDetails} from "../components/bag-detail/ProductDetails";
 import {ProductImagesSection} from "../components/bag-detail/ProductImagesSection";
 import styled from "styled-components";
 import {useContext, useEffect, useState} from "react";
