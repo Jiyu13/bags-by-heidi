@@ -18,7 +18,7 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "category_id", "image", "product_images")
+    list_display = ("id", "title", "description", "image", "category")
 
 
 class ProductImageAdmin(admin.ModelAdmin):
