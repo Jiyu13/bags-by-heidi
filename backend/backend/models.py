@@ -53,7 +53,7 @@ class ProductCategory(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
-    image = models.ImageField(null=True, blank=True, upload_to='media/product-images/')
+    image = models.ImageField(null=True, blank=True, upload_to='product-images/')
     category = models.ForeignKey(ProductCategory, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -64,7 +64,7 @@ class ProductImage(models.Model):
     """ A product has many media- ForeignKey """
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_images')
     image_name = models.CharField(max_length=120)
-    product_image = models.ImageField(null=True, blank=True, upload_to='media/product-images/')
+    product_image = models.ImageField(null=True, blank=True, upload_to='product-images/')
 
     def __str__(self):
         return self.image_name
