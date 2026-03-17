@@ -26,13 +26,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category_id = serializers.IntegerField(source="category.id", read_only=True)
+    category_name = serializers.CharField(source="category.category", read_only=True)
     # Nested ProductImage serializers to display associated media with a product
     product_images = ProductImageSerializer(many=True, read_only=True)
     image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ["id", "title", "description", "image", "product_images", "category_id"]
+        fields = ["id", "title", "description", "image", "product_images", "category_id", "category_name"]
 
     def get_image(self, obj):
         request = self.context.get("request")
