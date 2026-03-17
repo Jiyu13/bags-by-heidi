@@ -42,7 +42,7 @@ const SectionImageContainer = styled.section`
   }
 `;
 
-const Img = styled.img`
+export const Img = styled.img`
   position: absolute;
   inset: 0;
   width: 100%;
@@ -50,13 +50,13 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const Overlay = styled.div`
+export const Overlay = styled.div`
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.28);
 `;
 
-const SectionContent = styled.div`
+export const SectionContent = styled.div`
   position: relative;
   z-index: 2;
   width: 100%;
@@ -66,7 +66,7 @@ const SectionContent = styled.div`
   color: white;
 `;
 
-const Title = styled.h2`
+export const Title = styled.h2`
   font-family: "Meddon", cursive;
   font-weight: 400;
   font-style: normal;
@@ -87,7 +87,7 @@ const Title = styled.h2`
   }
 `;
 
-const Description = styled.p`
+export const Description = styled.p`
   margin: 0 auto;
   max-width: 640px;
   font-size: 1.05rem;
