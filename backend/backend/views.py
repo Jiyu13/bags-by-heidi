@@ -27,11 +27,25 @@ class ProductCategoriesView(APIView):
     def get(self, request):
         try:
             categories = ProductCategory.objects.all()
-            print("=======================", categories)
             serializer = ProductCategorySerializer(categories, many=True, context={"request": request})
             response = serializer.data
         except:
             response = {"error": "categories not found"}
+
+        return Response(response)
+
+
+class GetProductByCategoryView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
+    def get(self, request, category_name):
+        try:
+            category_name = category_name.replace("-", " ").title()
+            products = Product.objects.filter(category__category=category_name)
+            serializer = ProductSerializer(products, many=True, context={"request": request})
+            response = serializer.data
+        except:
+            response = {"error": f"{category_name} not found"}
 
         return Response(response)
 
