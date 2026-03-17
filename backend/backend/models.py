@@ -1,6 +1,9 @@
+from PIL import Image
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+
+from .product_image import process_image
 
 
 class UserManager(BaseUserManager):
@@ -49,6 +52,13 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.category
 
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #
+    #     if self.cover_image:
+    #         self.cover_image.name = process_image(self.cover_image)
+    #         super().save(update_fields=["cover_image"])
+
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
@@ -59,6 +69,13 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #
+    #     if self.image:
+    #         self.image.name = process_image(self.image)
+    #         super().save(update_fields=["image"])
+
 
 class ProductImage(models.Model):
     """ A product has many media- ForeignKey """
@@ -68,6 +85,13 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.image_name
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #
+    #     if self.product_image:
+    #         self.product_image.name = process_image(self.product_image)
+    #         super().save(update_fields=["product_image"])
 
 
 # ------------------------------------ Home page ----------------------------------------------------------------------
@@ -89,5 +113,11 @@ class HomepageSection(models.Model):
     def __str__(self):
         return self.title
 
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #
+    #     if self.banner_image:
+    #         self.banner_image.name = process_image(self.banner_image)
+    #         super().save(update_fields=["banner_image"])
 
 
