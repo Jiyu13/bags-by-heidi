@@ -72,10 +72,10 @@ function Header() {
                                     <Link href="/shop/handbags">Handbags</Link>
                                 </LinkItem>
                                  <LinkItem>
-                                    <Link href="/totes">Totes</Link>
+                                    <Link href="/shop/totes">Totes</Link>
                                 </LinkItem>
                                  <LinkItem>
-                                    <Link href="/fun-accessories">Fun Accessories</Link>
+                                    <Link href="/shop/fun-accessories">Fun Accessories</Link>
                                 </LinkItem>
 
                                 <LinkItem>
