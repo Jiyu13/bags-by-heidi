@@ -30,5 +30,7 @@ studio-bags-by-heidi/
 frontend/node_modules/
 *.sqlite3
 backend/media/
+__pycache__/
+*.pyc
 
 
