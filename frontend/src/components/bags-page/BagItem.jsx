@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
+import {cleanCategoryName, lowerCategoryName} from "../../utils/cleanCategoryName";
 
 export default function BagItem({product}) {
 
     const navigate = useNavigate()
     const formattedProductName = product?.title.split(" ").join("-").toLowerCase()
-
+    const categoryName = lowerCategoryName(product?.category_name)
     function handleGoToProductDetail() {
-        navigate(`/bag/${product.id}/${formattedProductName}`)
+        navigate(`/${categoryName}/${product.id}/${formattedProductName}`)
     }
 
     return (

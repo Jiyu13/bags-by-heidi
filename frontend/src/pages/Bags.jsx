@@ -5,7 +5,8 @@ import {UserContext} from "../user-content/UserContent";
 import {useNavigate, useParams} from "react-router-dom";
 import BagItem from "../components/bags-page/BagItem";
 import {publicApi} from "../api";
-import {Img, Overlay, SectionContent, Title} from "../components/homepage/HomeBanner";
+import {Img, SectionContent, Title} from "../components/homepage/HomeBanner";
+import {upperCategoryName} from "../utils/cleanCategoryName";
 
 export default function Bags() {
     const {productCategories} = useContext(UserContext)
@@ -15,7 +16,7 @@ export default function Bags() {
 
 
     const { category_name } = useParams()
-    const categoryName = category_name.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+    const categoryName = upperCategoryName(category_name)
     const currentCategory = productCategories?.filter((p, index) => p.category === categoryName)[0]
 
     useEffect(() => {
