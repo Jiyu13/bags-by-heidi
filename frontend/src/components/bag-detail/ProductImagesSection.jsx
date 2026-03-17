@@ -1,45 +1,107 @@
-import {useContext, useState} from "react";
+import {useMemo, useState} from "react";
 import styled from "styled-components";
-import {UserContext} from "../../user-content/UserContent";
+import EnlargeDetailImage from "./EnlargeDetailImage";
+
 
 export function ProductImagesSection({coverImage, otherImages}) {
 
-    const {isMobile} = useContext(UserContext)
+    const [selectedIndex, setSelectedIndex] = useState(null);
+
+
+    function cleanImageUrl(url){
+        if (url) {
+            return url?.startsWith("http") ? url : `http://127.0.0.1:8000${url}`
+        }
+    }
+
+    const allImages = useMemo(() => {
+        const images = [];
+
+        if (coverImage) {
+            images.push({
+                src: cleanImageUrl(coverImage),
+                alt: "cover-image",
+            });
+        }
+
+        if (otherImages?.length) {
+            otherImages.forEach((image, index) => {
+                if (image?.product_image) {
+                    images.push({
+                        src: cleanImageUrl(image.product_image),
+                        alt: image.alt || `product-image-${index + 1}`,
+                    });
+                }
+            });
+        }
+
+        return images;
+    }, [coverImage, otherImages]);
+
+    function goPrev() {
+        setSelectedIndex((prev) => {
+            if (prev === null) return null;
+            return prev === 0 ? allImages.length - 1 : prev - 1;
+        });
+    }
+
+    function goNext() {
+        setSelectedIndex((prev) => {
+            if (prev === null) return null;
+            return prev === allImages.length - 1 ? 0 : prev + 1;
+        });
+    }
+
+
+    function openImage(index) {
+        setSelectedIndex(index);
+    }
+
+    function closeImage() {
+        setSelectedIndex(null);
+    }
+
 
     return (
-        <ProductImageContainer
-            // style={{ width: isMobile ? "100%" : "65%" }}
-        >
+        <>
+            <ProductImageContainer>
 
-            {/*================= main image ==================================*/}
-            <MainImageList>
-                <ImageItem>
-                    <ImageWrapper>
-                        <img src={`http://127.0.0.1:8000${coverImage}`} style={{width: "100%"}} alt={coverImage}/>
-                    </ImageWrapper>
-                </ImageItem>
-            </MainImageList>
+                {/*================= main image ==================================*/}
+                <MainImageList>
+                    {allImages[0] && (
+                        <ImageItem onClick={() => openImage(0)}>
+                            <ImageWrapper>
+                                <img src={allImages[0].src} alt={allImages[0].alt} />
+                            </ImageWrapper>
+                        </ImageItem>
+                    )}
+                </MainImageList>
 
-            <OtherImagesList>
+                <OtherImagesList>
 
-                {otherImages?.map((image, index) => (
-                    <ImageItem key={image.id || image.product_image || index}>
-                      <ImageWrapper>
-                        <img
-                          src={
-                            image.product_image?.startsWith("http")
-                              ? image.image
-                              : `http://127.0.0.1:8000${image.product_image}`
-                          }
-                          alt={image.alt || `product-image-${index + 1}`}
-                        />
-                      </ImageWrapper>
-                    </ImageItem>
-              ))}
-            </OtherImagesList>
+                    {allImages.slice(1).map((image, index) => (
+                        <ImageItem
+                            key={image.src || index}
+                            onClick={() => openImage(index + 1)}
+                        >
+                            <ImageWrapper>
+                                <img src={image.src} alt={image.alt} />
+                            </ImageWrapper>
+                        </ImageItem>
+                    ))}
+                </OtherImagesList>
 
 
-        </ProductImageContainer>
+            </ProductImageContainer>
+            <EnlargeDetailImage
+                images={allImages}
+                currentIndex={selectedIndex}
+                isOpen={Number.isInteger(selectedIndex)}
+                onClose={closeImage}
+                onPrev={goPrev}
+                onNext={goNext}
+            />
+        </>
     )
 }
 
@@ -79,6 +141,9 @@ const ImageItem = styled.li`
   width: 100%;
   margin: 0;
   padding: 0;
+  &:hover {
+    cursor: pointer;
+  }
 
 `
 
@@ -92,6 +157,7 @@ const ImageWrapper = styled.div`
 
   img {
     width: 100%;
+    height: 100%;
     display: block;
     object-fit: cover;
   }
