@@ -10,6 +10,8 @@ import {Img, Overlay, SectionContent, Title} from "../components/homepage/HomeBa
 export default function Bags() {
     const {productCategories} = useContext(UserContext)
     const [items, setItems] = useState(null)
+    const [loaded, setLoaded] = useState(false)
+
 
 
     const { category_name } = useParams()
@@ -33,8 +35,15 @@ export default function Bags() {
     return (
         <ProductPageContainer className='product-page-container'>
             <ProductPageBannerContainer className="category-cover-image-container">
-                <Img src={currentCategory?.cover_image} alt="category-cover-image" />
-                <Overlay />
+                <Img
+                    src={currentCategory?.cover_image}
+                    alt="category-cover-image"
+                    loading="eager"
+                    decoding="async"
+                    $loaded={loaded}
+                    onLoad={() => setLoaded(true)}
+                />
+                {/*<Overlay />*/}
                 <ProductPageTittleWrapper>
                    <ProductPageTittle>{currentCategory?.category}</ProductPageTittle>
                    {/*<Description>{topBanner?.description}</Description>*/}
@@ -68,24 +77,24 @@ const ProductPageContainer = styled.div`
 const ProductPageBannerContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 360px;
+  min-height: 420px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #d9d9d9;
+  background: #ffffff;
   object-fit: cover;
-  
+
   @media (max-width: 992px) {
-    min-height: 360px;
+    min-height: 420px;
   }
 
   @media (max-width: 768px) {
-    min-height: 300px;
+    min-height: 360px;
   }
 
   @media (max-width: 480px) {
-    min-height: 240px;
+    min-height: 300px;
   }
 `
 const ProductPageTittleWrapper = styled(SectionContent)``

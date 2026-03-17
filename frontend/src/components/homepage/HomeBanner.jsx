@@ -1,16 +1,24 @@
-import section_image from "../../assets/images/section-image.jpg"
 import styled from "styled-components";
 import {UserContext} from "../../user-content/UserContent";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 
 export default function HomeBanner() {
 
     const {topBanner} = useContext(UserContext)
+    const [loaded, setLoaded] = useState(false)
+
     return (
         <SectionImageContainer className="section-image-container">
-            <Img src={topBanner?.banner_image} alt="section-image" />
+            <Img
+                src={topBanner?.banner_image}
+                alt="section-image"
+                loading="eager"
+                decoding="async"
+                $loaded={loaded}
+                onLoad={() => setLoaded(true)}
+            />
 
-            <Overlay />
+            {/*<Overlay />*/}
             <SectionContent>
                <Title>{topBanner?.title}</Title>
                <Description>{topBanner?.description}</Description>
@@ -26,7 +34,7 @@ const SectionImageContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #d9d9d9;
+  background: #fff;
 
 
   @media (max-width: 992px) {
@@ -48,6 +56,9 @@ export const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: ${props => (props.$loaded ? 1 : 0)};
+  transition: opacity 0.6s ease;
+
 `;
 
 export const Overlay = styled.div`
