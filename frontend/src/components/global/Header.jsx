@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../../assets/logo/logo.svg"
+import bags_by_heidi from "../../assets/logo/bags-by-heidi-logo.svg"
 import {UserContext} from "../../user-content/UserContent";
 import {useContext, useEffect, useState} from "react";
 import MobileMenuBtn from "./MobileMenuBtn";
@@ -30,7 +30,7 @@ function Header() {
                     <a href ="/" style={{textDecoration:'none', color: "inherit"}}>
                         <LogoWrapper>
                             <LogoImg>
-                                <img src={logo} alt="bags by heidi logo" style={{backgroundColor: "transparent"}}/>
+                                <img src={bags_by_heidi} alt="bags by heidi logo" style={{backgroundColor: "transparent"}}/>
                             </LogoImg>
                         </LogoWrapper>
                     </a>
@@ -154,7 +154,7 @@ const LogoWrapper = styled.div`
 
 const LogoImg = styled.div`
     //width: 36px;
-    height: 110px;
+    height: 90px;
 
     img {
         width: 100%;
