@@ -15,8 +15,8 @@ export default function MobileMenuBtn({isOpenMenu, handleOpenHeaderMenu}) {
 }
 
 const MobileMenuContainer  = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   padding: 0.5rem;
   border-radius: 45px;
   cursor: pointer;
