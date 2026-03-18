@@ -8,11 +8,12 @@ import {useEffect, useState} from "react";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import {Login} from "./pages/Login";
-import api, {publicApi} from "./api";
+import {publicApi} from "./api";
 import Bags from "./pages/Bags";
 import {Footer} from "./components/global/Footer";
 import {useMediaQuery} from "react-responsive";
 import BagDetailPage from "./pages/BagDetailPage";
+import Gallery from "./pages/Gallery";
 
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
     const [isAuthorized, setIsAuthorized] = useState(null)
     const [topBanner, setTopBanner] = useState(null)
     const [aboutBrand, setAboutBrand] = useState(null)
+    const [homeCustomerFeedbackSection, setHomeCustomerFeedbackSection] = useState(null)
     const [customerFeedback, setCustomerFeedback] = useState(null)
-
     const [productCategories, setProductCategories] = useState(null)
     const [products, setProducts] = useState(null)
     const [socialMedias, setSocialMedias] = useState(null)
@@ -35,7 +36,7 @@ function App() {
                 const sections = res.data
                 setTopBanner(sections[0])
                 setAboutBrand(sections[1])
-                setCustomerFeedback(sections[2])
+                setHomeCustomerFeedbackSection(sections[2])
             } catch (error) {
                 console.log("failed to get products",  error.response.data)
             }
@@ -85,6 +86,21 @@ function App() {
         getSocialMedias()
     }, [])
 
+    // ========================== get feedbacks ==========================
+    useEffect(() => {
+        async function getCustomerFeedback() {
+            try {
+                const res = await publicApi.get("/customer_feedback/")
+                const result = res.data
+                console.log(result)
+                setCustomerFeedback(result)
+            } catch (error) {
+                console.log("failed to get customer feedback",  error.response.data)
+            }
+        }
+        getCustomerFeedback()
+    }, [])
+
     const isTablet = useMediaQuery({query: "(max-width: 1024px)" })
     const isMobile = useMediaQuery({query: "(max-width: 868px)" })
 
@@ -93,59 +109,25 @@ function App() {
         isAuthorized, setIsAuthorized,
         products, setProducts,
         isMobile, isTablet,
-        topBanner, aboutBrand, customerFeedback, productCategories, socialMedias
+        topBanner, aboutBrand, homeCustomerFeedbackSection,
+        customerFeedback, productCategories, socialMedias
     }
 
 
     return (
         <UserContext.Provider value={userContextValue}>
             <PageContainer>
-                {/*<Header />*/}
-
                 <Header/>
 
-
-                {/*{!isLaptop && (*/}
-                {/*    <MobileMenuBtn*/}
-                {/*      isOpenMenu={isOpenMenu}*/}
-                {/*      handleOpenHeaderMenu={handleOpenHeaderMenu}*/}
-                {/*    />*/}
-                {/*)}*/}
-
-                {/* keep MobileMenu mounted, it is mounting only when isOpenMenu is true */}
-                {/*<MobileMenu*/}
-                {/*   isOpenMenu={isOpenMenu}*/}
-                {/*   handleOpenHeaderMenu={handleOpenHeaderMenu}*/}
-                {/*/>*/}
-
-
                 <Main>
-                {/*  <Outlet />*/}
-
                     <Routes>
+                        <Route exact path='/customer-feedback/gallery' element={<Gallery />} />
+                        <Route exact path='/shop/:category_name' element={<Bags />} />
+                        <Route exact path="/:category_name/:id/:product_name" element={<BagDetailPage />}/>
                         <Route exact path="/about" element={<About />}/>
                         <Route exact path="/contact" element={<Contact />} />
                         <Route exact path='/login' element={<Login />} />
-                        {/*<Route exact path='/fun_accessories' element={<Bags />} />*/}
-                        {/*<Route exact path='/totes' element={<Bags />} />*/}
-                        {/*<Route exact path='/backpacks' element={<Bags />} />*/}
-                        {/*<Route exact path='/handbags' element={<Bags />} />*/}
-                        <Route exact path='/shop/:category_name' element={<Bags />} />
-
                         <Route exact path="/" element={<Home />}/>
-                        <Route exact path="/:category_name/:id/:product_name" element={<BagDetailPage />}/>
-
-
-                        {/*<Route exact path="*" element={< />}/>*/}
-                        {/*<Route exact path="/register" element={<Register />}/>*/}
-                        {/*<Route exact path="/login" element={<Login />}/>*/}
-
-                        {/*<Route element={<ProtectedRoutes/>}>*/}
-                        {/*     <Route exact path="/" element={<Home />}/>*/}
-                        {/*     <Route exact path='/article/:article_title/:article_id' element={<Article />} />*/}
-                        {/*     <Route exact path='/article/add' element={<ArticleCreate />} />*/}
-                        {/*</Route>*/}
-
                     </Routes>
                 </Main>
 
