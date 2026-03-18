@@ -40,12 +40,12 @@ const ItemContainer = styled.li`
   box-sizing: border-box;
   //flex: 0 0 calc(25% - 1.2rem);
   flex: 0 0 calc((100% - 3 * 1.5rem) / 4);
-  border: 1px solid rgba(2, 2, 2, 0.1);
-  transition: box-shadow 0.25s ease;
-  background: rgb(255, 255, 255);
+  //border: 1px solid rgba(2, 2, 2, 0.1);
+  transition: transform 0.25s ease;
+  background: transparent;
   
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    transform: scale(1.01)
   }
   
   @media (max-width: 988px) {
@@ -83,10 +83,9 @@ const Img = styled.img`
 `
 
 const ProductContent = styled.div`
-  padding: 0.8rem 1rem 1rem;
+  padding: 0.8rem 0 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 8px;
 `
 
