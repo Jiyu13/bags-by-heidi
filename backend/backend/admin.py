@@ -57,3 +57,11 @@ class CustomerFeedbackAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CustomerFeedback, CustomerFeedbackAdmin)
+
+
+# ================================= contact ===================================================
+class ContactRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'sender_email', 'message', 'created_at', "name")
+
+
+admin.site.register(ContactRequest, ContactRequestAdmin)

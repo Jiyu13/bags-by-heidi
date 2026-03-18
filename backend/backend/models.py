@@ -137,3 +137,13 @@ class CustomerFeedback(models.Model):
     published = models.BooleanField(default=False)
     review_date = models.DateField(null=True, blank=True)
 
+
+# ================================= Contact ==================================================
+class ContactRequest(models.Model):
+    name = models.CharField(max_length=255, null=True)
+    sender_email = models.EmailField(null=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Contact Request form {self.sender_email}'

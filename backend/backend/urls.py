@@ -37,7 +37,10 @@ urlpatterns = [
     path('product/<int:pk>/', ProductDetailView.as_view(), name="product-detail"),
 
     path("social_medias/", GetSocialMediasView.as_view(), name="social-media"),
-    path("customer_feedback/", GetCustomerFeedbackView.as_view(), name="customer-feedback")
+    path("customer_feedback/", GetCustomerFeedbackView.as_view(), name="customer-feedback"),
+
+
+    path('contact-requests/create/', CreateContactRequestView.as_view(), name='create-contact-request'),
 
 ]
 if settings.DEBUG:

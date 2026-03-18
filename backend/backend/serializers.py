@@ -69,3 +69,9 @@ class CustomerFeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerFeedback
         fields = ["id", "customer_name", "comment", "published", "image", "review_date"]
+
+
+class ContactRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactRequest
+        fields = '__all__'
