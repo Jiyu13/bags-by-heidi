@@ -1,5 +1,9 @@
+from django.core.mail import send_mail
+from django.conf import settings
+
 from rest_framework import permissions, status
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -106,3 +110,67 @@ class GetCustomerFeedbackView(APIView):
         feedbacks = CustomerFeedback.objects.all()
         serializer = CustomerFeedbackSerializer(feedbacks, many=True, context={"request": request})
         return Response(serializer.data)
+
+
+# ======================================== contact ================================================================
+class CreateContactRequestView(CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+    queryset = ContactRequest.objects.all()
+    serializer_class = ContactRequestSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # ============================================Create the ContactRequest & save to db============================
+        # data = serializer.validated_data
+        # name = data.get("name", "")
+        # user_email = data.get("sender_email", "")
+        # message = data.get("message", "")
+
+        contact_request = serializer.save()
+        # =========================================Compose the email content============================================
+        notification_subject = "New Ticket" + " -- " + contact_request.name
+        user_email = contact_request.sender_email
+        notification_message = (
+            f'From: {contact_request.name} -- {user_email}\n\n'
+            f'{contact_request.message}'
+        )
+
+        try:
+            # # =================Send a notification email =============================================================
+            send_mail(
+                notification_subject,
+                notification_message,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False
+            )
+            # ==================Send a auto-reply email to user ========================================================
+            auto_reply_subject = "Ticket Received" + " - " + contact_request.name
+
+            auto_reply_message = (
+                f"We would like to acknowledge that we have received your request and a ticket has been created. "
+                f"We will be reviewing your request and will send you a personal response shortly.\n\n"
+                f"Thank you for your patience. \n\n"
+                f"Sincerely,\n\n"
+                f"Sent by Bags by Heidi"
+            )
+
+            # Specify the email address where you want to receive notifications
+            autor_reply_receiver_email = user_email
+
+            # Send the notification email
+            send_mail(
+                auto_reply_subject,
+                auto_reply_message,
+                settings.EMAIL_HOST_USER,
+                [autor_reply_receiver_email],
+                fail_silently=False
+            )
+
+        except Exception as e:
+            # Handle email sending errors
+            return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
