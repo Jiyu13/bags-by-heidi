@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { useEffect } from "react";
+import left_icon from "../../assets/icons/left.svg"
+import right_icon from "../../assets/icons/right.svg"
+
 
 export default function EnlargeDetailImage({
     images,
@@ -42,11 +45,11 @@ export default function EnlargeDetailImage({
                 {images?.length > 1 && (
                     <>
                         <NavButtonLeft onClick={onPrev} aria-label="Previous image">
-                            ‹
+                            <NavImg src={left_icon} alt="Previous button"/>
                         </NavButtonLeft>
 
                         <NavButtonRight onClick={onNext} aria-label="Next image">
-                            ›
+                            <NavImg src={right_icon} alt="Next button"/>
                         </NavButtonRight>
                     </>
                 )}
@@ -92,8 +95,8 @@ const CloseButton = styled.button`
   position: absolute;
   top: -10px;
   right: -10px;
-  width: 42px;
-  height: 42px;
+  width: 3rem;
+  height: 3rem;
   border: none;
   border-radius: 50%;
   background: white;
@@ -106,15 +109,17 @@ const NavButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 52px;
-  height: 52px;
+  width: 3rem;
+  height: 3rem;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.9);
   color: black;
-  font-size: 2rem;
   cursor: pointer;
   z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const NavButtonLeft = styled(NavButton)`
   left: 12px;
@@ -123,6 +128,10 @@ const NavButtonLeft = styled(NavButton)`
 const NavButtonRight = styled(NavButton)`
   right: 12px;
 `;
+const NavImg = styled.img`
+  background: none;
+  width: 24px;
+`
 
 const ImageWrapper = styled.div`
   width: 100%;
@@ -136,7 +145,7 @@ const ImageWrapper = styled.div`
 
 const LargeImage = styled.img`
   width: 100%;
-  max-height: 90vh;
+  height: 100%;
   object-fit: contain;
   display: block;
 `;
