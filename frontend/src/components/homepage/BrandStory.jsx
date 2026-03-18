@@ -32,7 +32,7 @@ export default function BrandStory() {
   );
 }
 const Section = styled.section`
-  background: #f7f4ef;
+  background: #F2EAE0;
   padding: 3rem 0;
 `;
 
