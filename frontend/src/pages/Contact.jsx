@@ -169,6 +169,7 @@ export const PageTittleContainer = styled.div`
   align-items: center;
   width: 100%;
   text-align: center;
+  margin-bottom: 2rem;
 `;
 
 export const PageTitle = styled.h1`
@@ -188,6 +189,7 @@ export const PageText = styled.p`
   font-size: 1rem;
   line-height: 1.6;
   margin: 0 0 1rem;
+  color: rgba(143, 143, 143, 1) ;
 `;
 
 export const WarningMessage = styled.div`
