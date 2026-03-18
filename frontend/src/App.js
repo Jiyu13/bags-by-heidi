@@ -24,6 +24,8 @@ function App() {
 
     const [productCategories, setProductCategories] = useState(null)
     const [products, setProducts] = useState(null)
+    const [socialMedias, setSocialMedias] = useState(null)
+
 
     // ========================== get homepage sections =================
     useEffect(() => {
@@ -69,8 +71,21 @@ function App() {
     //     }
     //     getProducts()
     // }, [])
+    // ========================== get social medias ==========================
+    useEffect(() => {
+        async function getSocialMedias() {
+            try {
+                const res = await publicApi.get("/social_medias/")
+                const result = res.data
+                setSocialMedias(result)
+            } catch (error) {
+                console.log("failed to get social medias",  error.response.data)
+            }
+        }
+        getSocialMedias()
+    }, [])
 
-   const isTablet = useMediaQuery({query: "(max-width: 1024px)" })
+    const isTablet = useMediaQuery({query: "(max-width: 1024px)" })
     const isMobile = useMediaQuery({query: "(max-width: 868px)" })
 
 
@@ -78,7 +93,7 @@ function App() {
         isAuthorized, setIsAuthorized,
         products, setProducts,
         isMobile, isTablet,
-        topBanner, aboutBrand, customerFeedback, productCategories
+        topBanner, aboutBrand, customerFeedback, productCategories, socialMedias
     }
 
 
