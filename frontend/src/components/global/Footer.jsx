@@ -3,6 +3,7 @@ import instagram_icon from "../../assets/icons/instagram.svg"
 import facebook_icon from "../../assets/icons/facebook.svg"
 import tiktok_icon from "../../assets/icons/tiktok.svg"
 import pinterest from "../../assets/icons/pinterest.svg"
+import bags_by_heidi from "../../assets/logo/bags-by-heidi-logo.svg"
 import {useContext} from "react";
 import {UserContext} from "../../user-content/UserContent";
 
@@ -41,29 +42,34 @@ export function Footer() {
                         </FooterList>
                     </FooterColumn>
 
-                    {socialMedias?.length > 0 && (
-                    <SocialRow>
-                        <SocialMediaIcons>
-                            {socialMedias?.map((sm, index) => {
-                                if (!sm.is_available) return null;
+                    <FooterColumn>
+                        {socialMedias?.length > 0 && (
+                            <SocialRow>
+                                <LogoImgWrapper>
+                                    <img src={bags_by_heidi} alt="bags by heidi logo" style={{backgroundColor: "transparent"}}/>
+                                </LogoImgWrapper>
+                                <SocialMediaIcons>
+                                    {socialMedias?.map((sm, index) => {
+                                        if (!sm.is_available) return null;
 
-                                const iconSrc = SOCIAL_ICONS[sm.name?.toLowerCase()];
-                                return (
-                                    <SocialLink
-                                        href={sm.link}
-                                        key={sm.name}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <SocialIcon src={iconSrc} alt={sm.name} />
-                                    </SocialLink>
-                                );
-                            })}
-                        </SocialMediaIcons>
+                                        const iconSrc = SOCIAL_ICONS[sm.name?.toLowerCase()];
+                                        return (
+                                            <SocialLink
+                                                href={sm.link}
+                                                key={sm.name}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                <SocialIcon src={iconSrc} alt={sm.name} />
+                                            </SocialLink>
+                                        );
+                                    })}
+                                </SocialMediaIcons>
 
-                    </SocialRow>
+                            </SocialRow>
 
-                )}
+                        )}
+                    </FooterColumn>
 
                 </FooterTop>
 
@@ -142,6 +148,7 @@ const FooterLink = styled.a`
 
 const SocialRow = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 0 0 1.5rem;
 `;
@@ -186,3 +193,14 @@ const Copyright = styled.small`
   color: #b8b8b8;
   font-size: 0.9rem;
 `;
+const LogoImgWrapper = styled.div`
+  width: 100%;
+  max-width: 200px;
+  margin-bottom: 1rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+`
