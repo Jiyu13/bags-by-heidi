@@ -1,51 +1,71 @@
 import styled from "styled-components";
-import instagram_icon from "../../assets/images/instagram.svg"
-import facebook_icon from "../../assets/images/square-facebook.svg"
+import instagram_icon from "../../assets/icons/instagram.svg"
+import facebook_icon from "../../assets/icons/facebook.svg"
+import tiktok_icon from "../../assets/icons/tiktok.svg"
+import pinterest from "../../assets/icons/pinterest.svg"
+import {useContext} from "react";
+import {UserContext} from "../../user-content/UserContent";
+
+const SOCIAL_ICONS = {
+    instagram: instagram_icon,
+    facebook: facebook_icon,
+    tiktok: tiktok_icon,
+    pinterest: pinterest,
+};
+
 export function Footer() {
+
+    const {socialMedias} = useContext(UserContext)
+    console.log(socialMedias)
     return (
         <FooterContainer>
             <FooterInner>
-                {/*<FooterTop>*/}
-                {/*    <FooterColumn>*/}
-                {/*        <FooterHeading>Follow </FooterHeading>*/}
-                {/*        <FooterList>*/}
-                {/*            <FooterItem><FooterLink href="/contact">Contact</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="">Shipping & Returns</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="">Newsletter</FooterLink></FooterItem>*/}
-                {/*        </FooterList>*/}
-                {/*    </FooterColumn>*/}
+                <FooterTop>
+                    <FooterColumn>
+                        {/*<FooterHeading>About</FooterHeading>*/}
+                        <FooterList>
+                            <FooterItem><FooterLink href="/">Home</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/about">About</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/contact">Contact</FooterLink></FooterItem>
+                        </FooterList>
+                    </FooterColumn>
 
-                {/*    <FooterColumn>*/}
-                {/*        <FooterHeading>Shop</FooterHeading>*/}
-                {/*        <FooterList>*/}
-                {/*            <FooterItem><FooterLink href="/shop/earrings">Earrings</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="/shop/rings">Rings</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="/shop/necklaces">Necklaces</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="/shop/bracelets">Bracelets</FooterLink></FooterItem>*/}
-                {/*        </FooterList>*/}
-                {/*    </FooterColumn>*/}
+                    <FooterColumn>
+                        {/*<FooterHeading>Shop</FooterHeading>*/}
+                        <FooterList>
+                            <FooterItem><FooterLink href="/shop/backpacks">Backpacks</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/shop/handbags">Handbags</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/shop/totes">Totes</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/shop/fun-accessories">Fun Accessories</FooterLink></FooterItem>
+                        </FooterList>
+                    </FooterColumn>
 
-                {/*    <FooterColumn>*/}
-                {/*        <FooterHeading>Company</FooterHeading>*/}
-                {/*        <FooterList>*/}
-                {/*            <FooterItem><FooterLink href="">About</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="">Privacy Policy</FooterLink></FooterItem>*/}
-                {/*            <FooterItem><FooterLink href="">Terms</FooterLink></FooterItem>*/}
-                {/*        </FooterList>*/}
-                {/*    </FooterColumn>*/}
-                {/*</FooterTop>*/}
+                    {socialMedias?.length > 0 && (
+                    <SocialRow>
+                        <SocialMediaIcons>
+                            {socialMedias?.map((sm, index) => {
+                                if (!sm.is_available) return null;
 
-                <SocialRow>
-                    <SocialMediaIcons>
-                        <SocialLink href="">
-                            <SocialIcon src={instagram_icon} alt="Instagram" />
-                        </SocialLink>
+                                const iconSrc = SOCIAL_ICONS[sm.name?.toLowerCase()];
+                                return (
+                                    <SocialLink
+                                        href={sm.link}
+                                        key={sm.name}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <SocialIcon src={iconSrc} alt={sm.name} />
+                                    </SocialLink>
+                                );
+                            })}
+                        </SocialMediaIcons>
 
-                        <SocialLink href="">
-                            <SocialIcon src={facebook_icon} alt="Facebook" />
-                        </SocialLink>
-                    </SocialMediaIcons>
-                </SocialRow>
+                    </SocialRow>
+
+                )}
+
+                </FooterTop>
+
 
                 <FooterBottom>
                     <Copyright>© 2026 Bags by Heidi · All right reserved.</Copyright>
@@ -158,7 +178,7 @@ const FooterBottom = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.08);
 `;
 
 const Copyright = styled.small`
