@@ -122,7 +122,7 @@ const HeaderContainer = styled.header`
     position: fixed;
     z-index: 1000;   // make navbar on top of articleList when scrolling down
     padding: 2rem;
-  background-color: #fff;
+    background-color: #2f2f2f;
 
     
   border-bottom: 1px solid rgba(143, 143, 143, 0.5);
@@ -197,12 +197,12 @@ const LinkItem = styled.li`
 
 const Link = styled.a`
   text-decoration: none;
-  color: rgb(72, 72, 72);;
+  color: rgba(244, 245, 234, .6);;
   font-size: inherit;
 
 
   &:hover {
-    color: rgba(23, 23, 23, 1);
+    color: rgba(244, 245, 234, 1);
     //transform: scale(1.1);
   }
 `;
