@@ -46,9 +46,14 @@ export default function BagDetailPage() {
 
                     <DescriptionContainer className='description-container'>
                         <ul style={{paddingLeft: "20px"}}>
-                            <DescriptionItem>Can put material here</DescriptionItem>
-                            <DescriptionItem>Bag dimensions</DescriptionItem>
-                            <DescriptionItem>other features</DescriptionItem>
+                            <DescriptionItem>
+                                <DescriptionSpan>Material:</DescriptionSpan>
+                            </DescriptionItem>
+                            <DescriptionItem>
+                                <DescriptionSpan>Dimensions:</DescriptionSpan>
+
+                            </DescriptionItem>
+                            {/*<DescriptionItem>other features</DescriptionItem>*/}
 
                         </ul>
                     </DescriptionContainer>
@@ -111,10 +116,13 @@ const DescriptionContainer = styled.div`
     color: rgba(40,44,52, 0.6);
     font-size: 0.9rem;
     border-top: 1px solid #eaeaea;
-
 `
 
 const DescriptionItem = styled.li`
   margin: 12px 0;
   line-height: 1.5;
+`
+const DescriptionSpan = styled.span`
+  font-weight: Bold;
+  color: #13141b;
 `
