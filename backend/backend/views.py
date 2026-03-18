@@ -97,3 +97,12 @@ class GetSocialMediasView(APIView):
         social_medias = SocialMedia.objects.all()
         serializer = SocialMediaSerializer(social_medias, many=True, context={"request": request})
         return Response(serializer.data)
+
+
+class GetCustomerFeedbackView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
+    def get(self, request):
+        feedbacks = CustomerFeedback.objects.all()
+        serializer = CustomerFeedbackSerializer(feedbacks, many=True, context={"request": request})
+        return Response(serializer.data)

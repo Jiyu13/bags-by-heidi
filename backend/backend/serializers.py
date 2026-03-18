@@ -63,3 +63,9 @@ class SocialMediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialMedia
         fields = ["id", "name", "link", "is_available"]
+
+
+class CustomerFeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerFeedback
+        fields = ["id", "customer_name", "comment", "published", "image", "review_date"]

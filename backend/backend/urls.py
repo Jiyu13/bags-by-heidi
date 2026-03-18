@@ -36,7 +36,8 @@ urlpatterns = [
     path('products/<str:category_name>/', GetProductByCategoryView.as_view(), name="get_backpacks"),
     path('product/<int:pk>/', ProductDetailView.as_view(), name="product-detail"),
 
-    path("social_medias/", GetSocialMediasView.as_view(), name="social-media")
+    path("social_medias/", GetSocialMediasView.as_view(), name="social-media"),
+    path("customer_feedback/", GetCustomerFeedbackView.as_view(), name="customer-feedback")
 
 ]
 if settings.DEBUG:

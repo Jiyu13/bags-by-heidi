@@ -130,3 +130,10 @@ class SocialMedia(models.Model):
         return self.name
 
 
+class CustomerFeedback(models.Model):
+    customer_name = models.CharField(max_length=120, null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='customer-feedback-images/')
+    published = models.BooleanField(default=False)
+    review_date = models.DateField(null=True, blank=True)
+

@@ -50,3 +50,10 @@ class SocialMediasAdmin(admin.ModelAdmin):
 
 admin.site.register(SocialMedia, SocialMediasAdmin)
 
+
+# ================================= customer feedback ===================================================
+class CustomerFeedbackAdmin(admin.ModelAdmin):
+    list_display = ("id", "customer_name", "comment", "image", "published", "review_date")
+
+
+admin.site.register(CustomerFeedback, CustomerFeedbackAdmin)
