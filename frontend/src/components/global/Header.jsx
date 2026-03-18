@@ -125,7 +125,7 @@ const HeaderContainer = styled.header`
     background-color: #2f2f2f;
 
     
-  border-bottom: 1px solid rgba(143, 143, 143, 0.5);
+  //border-bottom: 1px solid rgba(143, 143, 143, 0.5);
 `
 const HeaderWrapper = styled.div`
   width: 100%;
