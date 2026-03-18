@@ -1,17 +1,16 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
+import {publicApi} from "../api";
+import {MessageSentSuccessfully} from "../components/contact/MessageSentSuccessfully";
 
 
 export default function Contact() {
-
+    const [isSent, setIsSent] = useState(false)
     const [emailError, setEmailError] = useState(null)
     const initialValue = {
-        sender: null,
-        full_name: "",
-        sender_email:  "",
-        subject: "",
+        name: "",
+        sender_email: "",
         message: "",
-        // attachments: "",
     }
 
     const [formData, setFormData] = useState(initialValue)
@@ -25,38 +24,66 @@ export default function Contact() {
     function handleSubmitContactForm(e) {
         e.preventDefault()
         const formObject = {
-            sender:  formData.sender,
-            full_name: formData.full_name,
+            name: formData.name,
             sender_email: formData.sender_email,
-            subject: formData.subject,
             message: formData.message,
         }
 
-        // async function postContactRequest() {
-        //
-        //     try {
-        //         const res = await client.post('/contact-requests/create/', formObject, { withCredentials: true })
-        //         setIsSent(true)
-        //
-        //     } catch (error) {
-        //         setEmailError(error.response.data.sender_email[0])
-        //         // console.log(error)
-        //     }
-        //
-        // }
-        // postContactRequest()
+        async function postContactRequest() {
+
+            try {
+                const res = await publicApi.post('/contact-requests/create/', formObject, { withCredentials: true })
+                setIsSent(true)
+
+            } catch (error) {
+                console.log(error);
+
+                if (error.response && error.response.data) {
+                    const data = error.response.data;
+
+                    // Case 1: backend returned general error
+                    if (data.error) {
+                        setEmailError(data.error);
+                    }
+
+                    // Case 2: Django serializer validation errors
+                    else if (data.sender_email) {
+                        setEmailError(data.sender_email[0]);
+                    }
+
+                    // Case 3: fallback
+                    else {
+                        setEmailError("Something went wrong. Please try again.");
+                    }
+                } else {
+                    setEmailError("Network error. Please try again.");
+                }
+            }
+
+        }
+        postContactRequest()
         setFormData({
-            sender: null,
-            full_name: "",
+            name: "",
             sender_email: "",
-            subject: "",
             message: "",
             // attachments: "",
         })
 
     }
 
-    const disabledButton = !formData.full_name || !formData.sender_email || !formData.subject || !formData.message
+    let errorRef = useRef()
+    useEffect(() => {
+        let handler = (e) => {
+            if (emailError && errorRef.current && !errorRef.current.contains(e.target)){
+                setEmailError(null)
+            }
+        }
+
+        document.addEventListener("mousedown", handler)
+        return () => {
+            document.removeEventListener("mousedown", handler)
+        }
+    }, [emailError]);
 
 
     return (
@@ -65,49 +92,47 @@ export default function Contact() {
                 <PageTittleContainer className="contact-page-title">
                     <PageTitle>Contact</PageTitle>
 
-                    <PageText>Need help?</PageText>
-                    <PageText>Other description you want to put here.</PageText>
+                    <PageText>Need help? Send us an email!</PageText>
+                    {/*<PageText>Send us an email about your questions.</PageText>*/}
                 </PageTittleContainer>
 
 
-                {/*<div*/}
-                {/*    style={{*/}
-                {/*        display: emailError ? "" : "none",*/}
-                {/*        margin: "24px 0",*/}
-                {/*        color: "red",*/}
-                {/*        fontWeight: "bold"*/}
-                {/*        }}*/}
-                {/*        ref={errorRef}*/}
-                {/*>*/}
-                {/*    {emailError}*/}
-                {/*</div>*/}
+                <div
+                    style={{
+                        display: emailError ? "" : "none",
+                        margin: "24px 0",
+                        color: "red",
+                        fontWeight: "bold"
+                        }}
+                        ref={errorRef}
+                >
+                    {emailError}
+                </div>
 
                 <Form
                     className='contact-form'
                     onSubmit={handleSubmitContactForm}
                 >
 
-                    {/*{isSent && (<MessageSentSuccessfully />)}*/}
+                    {isSent && (<MessageSentSuccessfully />)}
 
 
                     <FieldBox>
                         <FormLabel>Name</FormLabel>
                         <FormInput
                             type="text"
-                            name='full_name'
-                            value={formData?.full_name}
+                            name='name'
+                            value={formData?.name}
                             onChange={handleOnchange}
                             required
                         />
 
                      </FieldBox>
 
-                    <FieldBox
-                        // style={{width: width}}
-                    >
+                    <FieldBox>
                         <FormLabel>Email </FormLabel>
                         <FormInput
-                            type="text"
+                            type="email"
                             name='sender_email'
                             value={formData?.sender_email}
                             onChange={handleOnchange}
@@ -200,7 +225,6 @@ export const WarningMessage = styled.div`
 `;
 export const Form = styled.form`
     width: 100%;
-    padding: 2rem 0;
     box-sizing: border-box;
 `
 
@@ -274,7 +298,7 @@ export const SubmitInputButton = styled.input`
   letter-spacing: 0.1rem;
   cursor: pointer;
   transition: .3s ease;
-  margin: 2rem 0 2rem;
+  margin: 1rem 0 2rem;
   //border-radius: 4px;
   width: 100%;
   
