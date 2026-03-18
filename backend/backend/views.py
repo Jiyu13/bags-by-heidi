@@ -131,7 +131,7 @@ class CreateContactRequestView(CreateAPIView):
 
         contact_request = serializer.save()
         # =========================================Compose the email content============================================
-        notification_subject = "New Ticket" + " -- " + contact_request.name
+        notification_subject = "New Ticket" + " -- from " + contact_request.name
         user_email = contact_request.sender_email
         notification_message = (
             f'From: {contact_request.name} -- {user_email}\n\n'
@@ -148,10 +148,11 @@ class CreateContactRequestView(CreateAPIView):
                 fail_silently=False
             )
             # ==================Send a auto-reply email to user ========================================================
-            auto_reply_subject = "Ticket Received" + " - " + contact_request.name
+            auto_reply_subject = "Bags by Heidi" + " - Ticket Received!"
 
             auto_reply_message = (
-                f"We would like to acknowledge that we have received your request and a ticket has been created. "
+                f"Hello {contact_request.name},\n\n"
+                f"We would like to acknowledge that we have received your request and a ticket has been created. \n"
                 f"We will be reviewing your request and will send you a personal response shortly.\n\n"
                 f"Thank you for your patience. \n\n"
                 f"Sincerely,\n\n"
