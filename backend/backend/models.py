@@ -121,3 +121,12 @@ class HomepageSection(models.Model):
     #         super().save(update_fields=["banner_image"])
 
 
+class SocialMedia(models.Model):
+    name = models.CharField(max_length=120, null=True, blank=True)
+    link = models.CharField(max_length=120, null=True, blank=True)
+    is_available = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
