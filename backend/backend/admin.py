@@ -61,7 +61,7 @@ admin.site.register(CustomerFeedback, CustomerFeedbackAdmin)
 
 # ================================= contact ===================================================
 class ContactRequestAdmin(admin.ModelAdmin):
-    list_display = ('id', 'sender_email', 'message', 'created_at', "name")
+    list_display = ('id', 'sender_email', 'message', 'created_at', "name", "solved")
 
 
 admin.site.register(ContactRequest, ContactRequestAdmin)
