@@ -13,76 +13,25 @@ import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../user-content/UserContent";
 
 
-const posts = [
-  { id: 1, image: feed1, link: "#", alt: "Customer post 1" },
-  { id: 2, image: feed2, link: "#", alt: "Customer post 2" },
-  { id: 3, image: feed3, link: "#", alt: "Customer post 3" },
-  { id: 4, image: feed4, link: "#", alt: "Customer post 4" },
-  { id: 5, image: feed5, link: "#", alt: "Customer post 5" },
-  { id: 6, image: feed6, link: "#", alt: "Customer post 6" },
-    { id: 7, image: feed7, link: "#", alt: "Customer post 7" },
-  { id: 8, image: feed8, link: "#", alt: "Customer post 8" },
-  { id: 9, image: feed9, link: "#", alt: "Customer post 9" },
-  { id: 10, image: feed10, link: "#", alt: "Customer post 10" },
-
-];
-
-
 export default function CustomerFeed() {
-    // const [visibleCount, setVisibleCount] = useState(10);
-    //
-    // useEffect(() => {
-    //     function updateVisibleCount() {
-    //       const width = window.innerWidth;
-    //
-    //       if (width <= 520) {
-    //         setVisibleCount(4);   // 2 x 2
-    //       } else if (width <= 868) {
-    //         setVisibleCount(6);   // 3 x 2
-    //       } else if (width <= 1124) {
-    //         setVisibleCount(8);   // 4 x 2
-    //       } else {
-    //         setVisibleCount(10);  // 5 x 2
-    //       }
-    //     }
-    //
-    //     updateVisibleCount();
-    //     window.addEventListener("resize", updateVisibleCount);
-    //
-    //     return () => window.removeEventListener("resize", updateVisibleCount);
-    // }, []);
-    //
-    // const visiblePosts = posts.slice(0, visibleCount);
 
-  const {customerFeedback} = useContext(UserContext)
+    const {customerFeedback, homeCustomerFeedbackSection} = useContext(UserContext)
+    const firstTenFeedback = customerFeedback?.slice(0, 10)
 
     return (
         <FeedSection className="feed-section">
             <FeedInner className="feed-inner">
               <FeedHeader className="feed-header">
-                <FeedTitle className="feed-title">{customerFeedback?.title}</FeedTitle>
+                <FeedTitle className="feed-title">{homeCustomerFeedbackSection?.title}</FeedTitle>
                 <FeedDescription className="feed-description">
-                  {customerFeedback?.description}
+                  {homeCustomerFeedbackSection?.description}
                 </FeedDescription>
               </FeedHeader>
 
               <FeedGrid className="feed-grid">
-                {/*{visiblePosts.map((post) => (*/}
-                {/*  <FeedItem key={post.id} href={post.link}>*/}
-                {/*    <FeedImage src={post.image} alt={post.alt} />*/}
-                {/*    <HoverLayer>*/}
-                {/*      <HoverText>View</HoverText>*/}
-                {/*    </HoverLayer>*/}
-                {/*  </FeedItem>*/}
-                {/*))}*/}
-                  {posts.map((post) => (
-                    <FeedItem key={post.id}
-                              // href={post.link}
-                    >
-                      <FeedImage src={post.image} alt={post.alt} />
-                      {/*<HoverLayer>*/}
-                      {/*  <HoverText>View</HoverText>*/}
-                      {/*</HoverLayer>*/}
+                  {firstTenFeedback?.map((fb) => (
+                    <FeedItem key={fb.id} href="/customer-feedback/gallery">
+                      <FeedImage src={fb.image} alt={fb.alt} />
                     </FeedItem>
                   ))}
               </FeedGrid>
@@ -162,7 +111,7 @@ const FeedGrid = styled.div`
   }
 `;
 
-const FeedItem = styled.div`
+const FeedItem = styled.a`
   position: relative;
   display: block;
   aspect-ratio: 1 / 1;
