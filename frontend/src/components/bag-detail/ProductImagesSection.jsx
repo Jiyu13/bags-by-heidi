@@ -1,10 +1,14 @@
-import {useMemo, useState} from "react";
+import {useContext, useMemo, useState} from "react";
 import styled from "styled-components";
 import EnlargeDetailImage from "./EnlargeDetailImage";
+import {UserContext} from "../../user-content/UserContent";
+import ProductImageMobileSlider from "./ProductImageMobileSlider";
+import {all} from "axios";
 
 
 export function ProductImagesSection({coverImage, otherImages}) {
 
+    const {isMobile} = useContext(UserContext)
     const [selectedIndex, setSelectedIndex] = useState(null);
 
 
@@ -65,32 +69,37 @@ export function ProductImagesSection({coverImage, otherImages}) {
     return (
         <>
             <ProductImageContainer>
+                {isMobile ?
+                    (<ProductImageMobileSlider allImages={allImages} openImage={openImage} />)
+                    :
+                    <>
+                        {/*================= main image ==================================*/}
+                        <MainImageList>
+                            {allImages[0] && (
+                                <ImageItem onClick={() => openImage(0)}>
+                                    <ImageWrapper>
+                                        <img src={allImages[0].src} alt={allImages[0].alt} />
+                                    </ImageWrapper>
+                                </ImageItem>
+                            )}
+                        </MainImageList>
 
-                {/*================= main image ==================================*/}
-                <MainImageList>
-                    {allImages[0] && (
-                        <ImageItem onClick={() => openImage(0)}>
-                            <ImageWrapper>
-                                <img src={allImages[0].src} alt={allImages[0].alt} />
-                            </ImageWrapper>
-                        </ImageItem>
-                    )}
-                </MainImageList>
+                        {/*================= other images ==================================*/}
+                        <OtherImagesList>
 
-                <OtherImagesList>
-
-                    {allImages.slice(1).map((image, index) => (
-                        <ImageItem
-                            key={image.src || index}
-                            onClick={() => openImage(index + 1)}
-                        >
-                            <ImageWrapper>
-                                <img src={image.src} alt={image.alt} />
-                            </ImageWrapper>
-                        </ImageItem>
-                    ))}
-                </OtherImagesList>
-
+                            {allImages.slice(1).map((image, index) => (
+                                <ImageItem
+                                    key={image.src || index}
+                                    onClick={() => openImage(index + 1)}
+                                >
+                                    <ImageWrapper>
+                                        <img src={image.src} alt={image.alt} />
+                                    </ImageWrapper>
+                                </ImageItem>
+                            ))}
+                        </OtherImagesList>
+                    </>
+                }
 
             </ProductImageContainer>
             <EnlargeDetailImage
