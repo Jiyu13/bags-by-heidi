@@ -36,6 +36,8 @@ urlpatterns = [
     path('products/<str:category_name>/', GetProductByCategoryView.as_view(), name="get_backpacks"),
     path('product/<int:pk>/', ProductDetailView.as_view(), name="product-detail"),
 
+    path("social_medias/", GetSocialMediasView.as_view(), name="social-media")
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

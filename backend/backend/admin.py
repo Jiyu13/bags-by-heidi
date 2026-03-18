@@ -43,3 +43,10 @@ admin.site.register(Section, SectionAdmin)
 admin.site.register(HomepageSection, HomepageSectionAdmin)
 
 
+# ================================= social medias ===================================================
+class SocialMediasAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "link")
+
+
+admin.site.register(SocialMedia, SocialMediasAdmin)
+

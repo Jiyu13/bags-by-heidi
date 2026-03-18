@@ -88,3 +88,12 @@ class HomepageSectionView(APIView):
         sections = HomepageSection.objects.all()
         serializer = HomepageSectionSerializer(sections, many=True, context={"request": request})
         return Response(serializer.data)
+
+
+class GetSocialMediasView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
+    def get(self, request):
+        social_medias = SocialMedia.objects.all()
+        serializer = SocialMediaSerializer(social_medias, many=True, context={"request": request})
+        return Response(serializer.data)

@@ -57,3 +57,9 @@ class HomepageSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = HomepageSection
         fields = ["id", "section_id", "section_name", "title", "description", "banner_image"]
+
+
+class SocialMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SocialMedia
+        fields = ["id", "name", "link", "is_available"]
