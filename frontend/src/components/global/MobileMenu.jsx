@@ -61,13 +61,13 @@ export default function MobileMenu({ isOpenMenu, handleOpenHeaderMenu }) {
                     </MenuItem>
 
                     <MenuItem>
-                        <Link href="/gallery">Gallery</Link>
+                        <Link href="/customer-feedback/gallery">Gallery</Link>
                     </MenuItem>
                     <MenuItem>
-                        <Link href="about">About</Link>
+                        <Link href="/about">About</Link>
                     </MenuItem>
                     <MenuItem>
-                        <Link href="contact">Contact</Link>
+                        <Link href="/contact">Contact</Link>
                         </MenuItem>
                 </ModalBody>
 

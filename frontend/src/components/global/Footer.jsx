@@ -16,7 +16,7 @@ const SOCIAL_ICONS = {
 export function Footer() {
 
     const {socialMedias} = useContext(UserContext)
-    console.log(socialMedias)
+
     return (
         <FooterContainer>
             <FooterInner>
@@ -25,7 +25,7 @@ export function Footer() {
                         {/*<FooterHeading>About</FooterHeading>*/}
                         <FooterList>
                             <FooterItem><FooterLink href="/">Home</FooterLink></FooterItem>
-                            <FooterItem><FooterLink href="/gallery">Gallery</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/customer-feedback/gallery">Gallery</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/about">About</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/contact">Contact</FooterLink></FooterItem>
                         </FooterList>

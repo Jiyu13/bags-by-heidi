@@ -79,13 +79,13 @@ function Header() {
                                 </LinkItem>
 
                                 <LinkItem>
-                                    <Link href="/gallery"  >Gallery</Link>
+                                    <Link href="/customer-feedback/gallery"  >Gallery</Link>
                                 </LinkItem>
                                 <LinkItem>
-                                    <Link href="about" >About</Link>
+                                    <Link href="/about" >About</Link>
                                 </LinkItem>
                                 <LinkItem>
-                                    <Link href="contact" >Contact</Link>
+                                    <Link href="/contact" >Contact</Link>
                                 </LinkItem>
                                 {/*<LinkItem>*/}
                                 {/*    <Link href="login">Login</Link>*/}
