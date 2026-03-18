@@ -74,7 +74,7 @@ export default function Gallery() {
 const Section = styled.section`
   width: 100%;
   //padding: 4rem 0;
-  background: #ffffff;
+  //background: #ffffff;
 `;
 
 const Inner = styled.div`
@@ -110,9 +110,9 @@ const ReviewsGrid = styled.div`
 
 const ReviewCard = styled.article`
   border: 1.5px solid rgba(143, 143, 143, 0.4);
-  border-radius: 20px;
+  border-radius: 8px;
   overflow: hidden;
-  background: #ffffff;
+  background: transparent;
   break-inside: avoid;
   margin-bottom: 0.5rem
 `;
