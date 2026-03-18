@@ -51,7 +51,7 @@ export default function Featured() {
 }
 
 const FeaturedContainer = styled.section`
-  background: #fff;
+  background: transparent;
 `;
 
 const FeaturedWrapper = styled.div`
