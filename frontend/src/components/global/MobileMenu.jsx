@@ -48,16 +48,16 @@ export default function MobileMenu({ isOpenMenu, handleOpenHeaderMenu }) {
                     </MenuItem>
 
                     <MenuItem>
-                        <Link href="/backpacks">Backpacks</Link>
+                        <Link href="/shop/backpacks">Backpacks</Link>
                     </MenuItem>
                      <MenuItem>
-                        <Link href="/handbags">Handbags</Link>
+                        <Link href="/shop/handbags">Handbags</Link>
                     </MenuItem>
                      <MenuItem>
-                        <Link href="/totes">Totes</Link>
+                        <Link href="/shop/totes">Totes</Link>
                     </MenuItem>
                      <MenuItem>
-                        <Link href="/fun-accessories">Fun Accessories</Link>
+                        <Link href="/shop/fun-accessories">Fun Accessories</Link>
                     </MenuItem>
 
                     <MenuItem>
