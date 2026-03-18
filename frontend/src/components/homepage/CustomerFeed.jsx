@@ -42,7 +42,7 @@ export default function CustomerFeed() {
 const FeedSection = styled.section`
   width: 100%;
   padding: 3rem 0;
-  background: #fff;
+  background:transparent;
 `;
 
 const FeedInner = styled.div`
