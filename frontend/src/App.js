@@ -92,7 +92,6 @@ function App() {
             try {
                 const res = await publicApi.get("/customer_feedback/")
                 const result = res.data
-                console.log(result)
                 setCustomerFeedback(result)
             } catch (error) {
                 console.log("failed to get customer feedback",  error.response.data)
