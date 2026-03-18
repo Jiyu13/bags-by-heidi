@@ -248,7 +248,8 @@ export const FormInput = styled.input`
   border: 1px solid rgb(210, 210, 210);
   box-sizing: border-box;
   outline: none;
-
+  background: transparent;
+  border-radius: 8px;
   &:focus {
     border-color: rgb(0, 0, 0);
   }
@@ -269,6 +270,8 @@ export const FormTextarea = styled.textarea`
   resize: vertical;
   outline: none;
   font-family: inherit;
+  background: transparent;
+  border-radius: 8px;
 
   &:focus {
     border-color: rgb(0, 0, 0);
@@ -299,7 +302,7 @@ export const SubmitInputButton = styled.input`
   cursor: pointer;
   transition: .3s ease;
   margin: 1rem 0 2rem;
-  //border-radius: 4px;
+  border-radius: 8px;
   width: 100%;
   
   &:hover {
