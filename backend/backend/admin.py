@@ -17,8 +17,15 @@ class ProductCategoryAdmin(admin.ModelAdmin):
     list_display = ("id", "category", "cover_image")
 
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1  # how many empty rows to show
+    fields = ("image_name", "product_image")
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "description", "image", "category")
+    inlines = [ProductImageInline]
 
 
 class ProductImageAdmin(admin.ModelAdmin):
@@ -27,7 +34,7 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductImage, ProductImageAdmin)
+# admin.site.register(ProductImage, ProductImageAdmin)
 
 
 # ================================= home page ===================================================
