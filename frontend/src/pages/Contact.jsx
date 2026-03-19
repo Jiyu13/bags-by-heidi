@@ -194,7 +194,8 @@ export const PageTittleContainer = styled.div`
   align-items: center;
   width: 100%;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
 `;
 
 export const PageTitle = styled.h1`
