@@ -83,7 +83,7 @@ const ProductPageBannerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  background-color: rgba(244, 245, 234, 1);
   object-fit: cover;
 
   @media (max-width: 992px) {
@@ -100,6 +100,8 @@ const ProductPageBannerContainer = styled.div`
 `
 const ProductPageTittleWrapper = styled(SectionContent)``
 const ProductPageTittle = styled(Title)`
+  color: rgba(244, 245, 234, 0.6);
+  font-weight: Bold;
   font-family: inherit;
   font-size: 3.5rem;
   @media (max-width: 992px) {
