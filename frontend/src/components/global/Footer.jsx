@@ -38,6 +38,7 @@ export function Footer() {
                             <FooterItem><FooterLink href="/shop/backpacks">Backpacks</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/shop/handbags">Handbags</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/shop/totes">Totes</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/shop/quilts">Quilts</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/shop/fun-accessories">Fun Accessories</FooterLink></FooterItem>
                         </FooterList>
                     </FooterColumn>
