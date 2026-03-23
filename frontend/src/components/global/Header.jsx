@@ -52,19 +52,6 @@ function Header() {
                                 <LinkItem>
                                     <Link href="/">Home</Link>
                                 </LinkItem>
-
-                                {/*{productCategories?.map((category, index) => {*/}
-                                {/*    const category_name = category?.category*/}
-                                {/*    const lowercase = category_name.toLowerCase()*/}
-                                {/*    return (*/}
-
-                                {/*        <LinkItem>*/}
-                                {/*            <Link href={`/shop/${lowercase}`} key={category?.id}>{category_name}</Link>*/}
-                                {/*        </LinkItem>*/}
-                                {/*    )*/}
-                                {/*})}*/}
-
-
                                 <LinkItem>
                                     <Link href="/shop/backpacks">Backpacks</Link>
                                 </LinkItem>
@@ -73,6 +60,9 @@ function Header() {
                                 </LinkItem>
                                  <LinkItem>
                                     <Link href="/shop/totes">Totes</Link>
+                                </LinkItem>
+                                <LinkItem>
+                                    <Link href="/shop/quilts">Quilts</Link>
                                 </LinkItem>
                                  <LinkItem>
                                     <Link href="/shop/fun-accessories">Fun Accessories</Link>
