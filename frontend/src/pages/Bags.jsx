@@ -45,7 +45,7 @@ export default function Bags() {
                     onLoad={() => setLoaded(true)}
                 />
                 {/*<Overlay />*/}
-                <ProductPageTittleWrapper>
+                <ProductPageTittleWrapper className="category-tittle-wrapper">
                    <ProductPageTittle>{currentCategory?.category}</ProductPageTittle>
                    {/*<Description>{topBanner?.description}</Description>*/}
                 </ProductPageTittleWrapper>
@@ -98,12 +98,19 @@ const ProductPageBannerContainer = styled.div`
     min-height: 300px;
   }
 `
-const ProductPageTittleWrapper = styled(SectionContent)``
+const ProductPageTittleWrapper = styled(SectionContent)`
+  width: auto;
+`
 const ProductPageTittle = styled(Title)`
-  color: rgba(244, 245, 234, 0.6);
+  background-color: rgba(40, 44, 52, 0.5);
+  color: rgba(255, 255, 255, 0.7);
   font-weight: Bold;
   font-family: inherit;
   font-size: 3.5rem;
+  margin-bottom: 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
   @media (max-width: 992px) {
     font-size: 3rem;
   }
