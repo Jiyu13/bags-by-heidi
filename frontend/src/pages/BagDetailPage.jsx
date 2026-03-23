@@ -7,30 +7,34 @@ import {useParams} from "react-router-dom";
 
 export default function BagDetailPage() {
     const {isMobile} = useContext(UserContext)
-
-    const [productDetail, setProductDetail] = useState(null)
-
     const {id} = useParams()
 
+
+    const [productDetail, setProductDetail] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         async function getDetail() {
             try {
+                setLoading(true)
                 const res = await publicApi.get(`/product/${id}/`)
                 const product = res.data
                 setProductDetail(product)
             } catch (error) {
                 console.log("failed to get products",  error.response.data)
+            } finally {
+                setLoading(false)
             }
         }
         getDetail()
     }, [id])
 
+    if (loading) {return null}
 
     return (
         <DetailPageContainer className='product-detail-page'>
-            <DetailPageWrapper $isMobile={isMobile}>
-                <ImagesColumn >
+            <DetailPageWrapper $isMobile={isMobile} className='detail-wrapper'>
+                <ImagesColumn className='image-column'>
                     <ProductImagesSection
                         coverImage={productDetail?.image}
                         otherImages={productDetail?.product_images}
@@ -40,17 +44,19 @@ export default function BagDetailPage() {
                 {/* =================== Detail ================*/}
                 <DetailSection $isMobile={isMobile} className='detail-section'>
                     <ProductTitle>{productDetail?.title}</ProductTitle>
-                    <p>
-                        description: The passage experienced a surge in popularity during the 1960s when Letraset used it on their dry-transfer sheets, and again during the 90s as desktop publishers bundled the text with their software. Today it's seen all around the web; on templates, websites, and stock designs. Use our generator to get your own, or read on for the authoritative history of lorem ipsum.
-                    </p>
+                    <ProductDescription>
+                        {productDetail?.description}
+                    </ProductDescription>
 
                     <DescriptionContainer className='description-container'>
                         <ul style={{paddingLeft: "20px"}}>
                             <DescriptionItem>
                                 <DescriptionSpan>Material:</DescriptionSpan>
+                                {productDetail?.material}
                             </DescriptionItem>
                             <DescriptionItem>
                                 <DescriptionSpan>Dimensions:</DescriptionSpan>
+                                {productDetail?.size}
 
                             </DescriptionItem>
                             {/*<DescriptionItem>other features</DescriptionItem>*/}
@@ -85,14 +91,14 @@ const DetailPageWrapper = styled.div`
   flex-direction: ${({ $isMobile }) => ($isMobile ? "column" : "row")};
 `
 const ImagesColumn = styled.div`
-  width: 50%;
+  width: 55%;
   @media (max-width: 868px) {
     width: 100%;
   }
 `;
 
 const DetailSection = styled.div`
-  width: 35%;
+  width: 45%;
   padding-left: 1.8rem;
   position: sticky;
   top: 8rem;
@@ -111,6 +117,9 @@ const ProductTitle = styled.h1`
   font-size: 2rem;
   margin-top: 0;
   margin-bottom: 1rem;
+`
+const ProductDescription = styled.p`
+  padding: 1rem 0;
 `
 const DescriptionContainer = styled.div`
     color: rgba(40,44,52, 0.6);
