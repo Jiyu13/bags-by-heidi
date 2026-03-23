@@ -147,7 +147,7 @@ const PageContainer = styled.div`
 const Main = styled.main`
     //min-height: calc(100vh - 120px);
     width: 100%;
-    margin: 120px auto 0;
+    margin: 100px auto 0;
     display: flex;
     flex-direction: column;
     flex: 1;
