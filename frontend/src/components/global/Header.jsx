@@ -26,7 +26,7 @@ function Header() {
         <HeaderContainer className="heading-container">
             <HeaderWrapper className="heading-wrapper">
 
-                <LeftSection>
+                <LeftSection className="logo section">
                     <a href ="/" style={{textDecoration:'none', color: "inherit"}}>
                         <LogoWrapper>
                             <LogoImg>
@@ -112,7 +112,7 @@ function Header() {
 
 const HeaderContainer = styled.header`
     width: 100%;
-    height: 120px;
+    height: 100px;
     display: flex;
     align-items: center;
     top: 0;
@@ -123,6 +123,7 @@ const HeaderContainer = styled.header`
     z-index: 1000;   // make navbar on top of articleList when scrolling down
     padding: 2rem;
     background-color: #2f2f2f;
+  overflow: hidden;
   
   @media (max-width: 1226px) {
     padding: 0.8rem;
@@ -157,7 +158,7 @@ const LogoWrapper = styled.div`
 
 const LogoImg = styled.div`
     //width: 36px;
-    height: 90px;
+    height: 100px;
 
     img {
         width: 100%;
