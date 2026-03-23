@@ -84,10 +84,10 @@ function Header() {
                                 <LinkItem>
                                     <Link href="/about" >About</Link>
                                 </LinkItem>
-                                <LinkItem>
-                                    <Link href="/contact" >Contact</Link>
-                                </LinkItem>
                                 {/*<LinkItem>*/}
+                                {/*    <Link href="/contact" >Contact</Link>*/}
+                                {/*</LinkItem>*/}
+                                {/*/!*<LinkItem>*!/*/}
                                 {/*    <Link href="login">Login</Link>*/}
                                 {/*</LinkItem>*/}
 
@@ -123,8 +123,11 @@ const HeaderContainer = styled.header`
     z-index: 1000;   // make navbar on top of articleList when scrolling down
     padding: 2rem;
     background-color: #2f2f2f;
-
-    
+  
+  @media (max-width: 1226px) {
+    padding: 0.8rem;
+  }
+  
   //border-bottom: 1px solid rgba(143, 143, 143, 0.5);
 `
 const HeaderWrapper = styled.div`
