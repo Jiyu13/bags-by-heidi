@@ -56,6 +56,9 @@ export default function MobileMenu({ isOpenMenu, handleOpenHeaderMenu }) {
                      <MenuItem>
                         <Link href="/shop/totes">Totes</Link>
                     </MenuItem>
+                    <MenuItem>
+                        <Link href="/shop/quilts">Quilts</Link>
+                    </MenuItem>
                      <MenuItem>
                         <Link href="/shop/fun-accessories">Fun Accessories</Link>
                     </MenuItem>
@@ -136,7 +139,7 @@ const ModalHeader = styled.div`
 `
 
 const ModalBody = styled.div`
-    padding: 0 1.5rem;
+    //padding: 0 1.5rem;
 `
 const MenuItem = styled.div`
     box-sizing: border-box;
@@ -147,7 +150,11 @@ const MenuItem = styled.div`
 const Link = styled.a`
     text-decoration: none;
     color: #000;
-    margin-bottom: 2rem;
+    padding: 1rem 1.5rem;
     font-size: 1rem;
     width: 100%;
+  
+  &:hover {
+      background-color: rgba(40,44,52, 0.1)
+  } 
 `
