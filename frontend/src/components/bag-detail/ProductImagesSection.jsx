@@ -3,7 +3,6 @@ import styled from "styled-components";
 import EnlargeDetailImage from "./EnlargeDetailImage";
 import {UserContext} from "../../user-content/UserContent";
 import ProductImageMobileSlider from "./ProductImageMobileSlider";
-import {all} from "axios";
 
 
 export function ProductImagesSection({coverImage, otherImages}) {
@@ -78,7 +77,7 @@ export function ProductImagesSection({coverImage, otherImages}) {
                             {allImages[0] && (
                                 <ImageItem onClick={() => openImage(0)}>
                                     <ImageWrapper>
-                                        <img src={allImages[0].src} alt={allImages[0].alt} />
+                                        <img src={allImages[0].src} alt={allImages[0].alt} loading="eager"/>
                                     </ImageWrapper>
                                 </ImageItem>
                             )}
@@ -150,10 +149,7 @@ const ImageItem = styled.li`
   width: 100%;
   margin: 0;
   padding: 0;
-  &:hover {
-    cursor: pointer;
-  }
-
+  cursor: pointer;
 `
 
 const ImageWrapper = styled.div`
@@ -162,7 +158,7 @@ const ImageWrapper = styled.div`
   background: rgb(255, 255, 255);
   border-radius: 0;
   box-shadow: none;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1/ 1;
 
   img {
     width: 100%;
