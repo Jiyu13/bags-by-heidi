@@ -1,7 +1,11 @@
 body {
   margin: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family: 'Roboto', sans-serif;  /*add link to index.html*/
+
+
     font-style: normal;
+
     font-weight: 400;
   letter-spacing: 0.06rem;
   background-color: rgba(244, 245, 234, .6);
