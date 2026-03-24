@@ -6,6 +6,7 @@ import {UserContext} from "../user-content/UserContent";
 import {useParams} from "react-router-dom";
 import {ButtonRow, SubmitInputButton} from "./Contact";
 import PopupEnquiryForm from "../components/bag-detail/PopupEnquiryForm";
+import check_icon from "../assets/icons/check.svg"
 
 export default function BagDetailPage() {
     const {isMobile} = useContext(UserContext)
@@ -15,6 +16,8 @@ export default function BagDetailPage() {
     const [productDetail, setProductDetail] = useState(null)
     const [loading, setLoading] = useState(true)
     const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+    const [isSent, setIsSent] = useState(false)
+
 
     useEffect(() => {
         async function getDetail() {
@@ -35,6 +38,8 @@ export default function BagDetailPage() {
     function handleMakeEnquiry() {
         setIsEnquiryOpen(true)
     }
+
+    const enquiryButtonColor = isSent ? "rgba(111, 175, 79, 1)" : "rgba(19, 20, 27, 1)"
 
     if (loading) {return null}
 
@@ -60,9 +65,13 @@ export default function BagDetailPage() {
                             <EnquiryButton
                                 className="enquiry-button"
                                 type="button"
-                                value="Make An Enquiry"
                                 onClick={handleMakeEnquiry}
-                            />
+                                $backgroundColor={enquiryButtonColor}
+                            >
+                                {isSent && <CheckIcon src={check_icon} alt="check" />}
+                                {isSent ? "Enquiry Sent" : "Make An Enquiry"}
+
+                            </EnquiryButton>
                         </EnquiryButtonContainer>
                     </EnquiryContainer>
 
@@ -92,8 +101,9 @@ export default function BagDetailPage() {
             {isEnquiryOpen && (
                 <PopupEnquiryForm
                     isOpen={isEnquiryOpen}
-                    onClose={() => setIsEnquiryOpen(false)}
+                    setIsEnquiryOpen={setIsEnquiryOpen}
                     productTitle={productDetail?.title}
+                    setIsSent={setIsSent}
                 />
             )}
 
@@ -167,9 +177,33 @@ const EnquiryText = styled.div`
 const EnquiryButtonContainer = styled(ButtonRow)`
   
 `
-const EnquiryButton = styled(SubmitInputButton)`
+const EnquiryButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   margin: 0;
+  background: ${({ $backgroundColor }) => $backgroundColor};
+   font-size: 1rem;
+  color: whitesmoke;
+  padding: 1rem 1.5rem;
+  border: none;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  transition: .3s ease;
+  border-radius: 8px;
+  width: 100%;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+  @media (max-width: 480px) {
+    padding: 0.95rem 1.2rem;
+    font-size: 1rem;
+  }
 `
+const CheckIcon = styled.img`
+`;
 const DescriptionContainer = styled.div`
   color: rgba(40, 44, 52, 0.6);
   font-size: 0.9rem;
