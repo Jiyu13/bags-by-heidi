@@ -1,158 +1,187 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import {publicApi} from "../../api";
 
-export default function PopupEnquiryForm({isOpen, onClose, productTitle = "",}) {
-      const [formData, setFormData] = useState({
-          name: "testing",
-          sender_email: "testing@gmail.com",
-          subject: productTitle ? `Enquiry about ${productTitle}` : "",
-          message: "test making an enquiry",
-      });
-      const [isSent, setIsSent] = useState(false)
-      const [emailError, setEmailError] = useState(null)
+export default function PopupEnquiryForm({isOpen, setIsEnquiryOpen, productTitle = "", setIsSent}) {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        sender_email: "",
+        subject: productTitle ? `Enquiry about ${productTitle}` : "",
+        message: "",
+    });
+    const [emailError, setEmailError] = useState(null)
+
+    function handleOnCloseEnquiry() {
+        setIsEnquiryOpen(false);
+    }
 
 
-
-      useEffect(() => {
+    useEffect(() => {
         if (isOpen) {
-          document.body.style.overflow = "hidden";
+            document.body.style.overflow = "hidden";
         }
 
         return () => {
             document.body.style.overflow = "auto";
-          };
-        }, [isOpen]);
+        };
+    }, [isOpen]);
 
-        useEffect(() => {
-          setFormData((prev) => ({
+    useEffect(() => {
+        setFormData((prev) => ({
             ...prev,
             subject: productTitle ? `Enquiry about ${productTitle}` : prev.subject,
-          }));
-      }, [productTitle]);
-
-      function handleChange(e) {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-          ...prev,
-          [name]: value,
         }));
-      }
+    }, [productTitle]);
+
+    function handleChange(e) {
+        const {name, value} = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    }
 
 
-      function handleSubmit(e) {
-          e.preventDefault()
+    function handleSubmit(e) {
+        e.preventDefault()
 
-          async function postContactRequest() {
+        async function postContactRequest() {
 
-              try {
-                  console.log(formData)
-                  const res = await publicApi.post('/contact-requests/create/', formData, { withCredentials: true })
-                  setIsSent(true)
-                  onClose();
-              } catch (error) {
-                  if (error.response && error.response.data) {
-                      const data = error.response.data;
+            try {
+                await publicApi.post('/contact-requests/create/', formData, { withCredentials: true })
+                setIsSent(true)
+                handleOnCloseEnquiry()
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    const data = error.response.data;
 
-                      // Case 1: backend returned general error
-                      if (data.error) {
-                          setEmailError(data.error);
-                      }
+                    // Case 1: backend returned general error
+                    if (data.error) {
+                        setEmailError(data.error);
+                    }
 
-                      // Case 2: Django serializer validation errors
-                      else if (data.sender_email) {
-                          setEmailError(data.sender_email[0]);
-                      }
+                    // Case 2: Django serializer validation errors
+                    else if (data.sender_email) {
+                        setEmailError(data.sender_email[0]);
+                    }
 
-                      // Case 3: fallback
-                      else {
-                          setEmailError("Something went wrong. Please try again.");
-                      }
-                  } else {
-                      setEmailError("Network error. Please try again.");
-                  }
-              }
+                    // Case 3: fallback
+                    else {
+                        setEmailError("Something went wrong. Please try again.");
+                    }
+                } else {
+                    setEmailError("Network error. Please try again.");
+                }
+            }
 
-          }
-          postContactRequest()
-          setFormData({
-              name: "",
-              sender_email: "",
-              subject: "",
-              message: "",
-          })
+        }
 
-      }
+        postContactRequest()
+        setFormData({
+            name: "",
+            sender_email: "",
+            subject: "",
+            message: "",
+        })
 
+    }
 
-      return (
-      <Overlay onClick={onClose}>
-        <Modal onClick={(e) => e.stopPropagation()}>
-          <TopRow>
-            <Title>Make An Enquiry</Title>
-            <CloseButton type="button" onClick={onClose}>
-              ×
-            </CloseButton>
-          </TopRow>
+    let errorRef = useRef()
+    useEffect(() => {
+        let handler = (e) => {
+            if (emailError && errorRef.current && !errorRef.current.contains(e.target)) {
+                setEmailError(null)
+            }
+        }
 
-          <Form onSubmit={handleSubmit}>
-            <FieldGroup>
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </FieldGroup>
+        document.addEventListener("mousedown", handler)
+        return () => {
+            document.removeEventListener("mousedown", handler)
+        }
+    }, [emailError]);
 
-            <FieldGroup>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                name="sender_email"
-                type="email"
-                autoComplete="email"
-                value={formData.sender_email}
-                onChange={handleChange}
-                required
-              />
-            </FieldGroup>
+    return (
+        <Overlay onClick={handleOnCloseEnquiry}>
+            <Modal onClick={(e) => e.stopPropagation()}>
+                <TopRow>
+                    <Title>Make An Enquiry</Title>
+                    <CloseButton type="button" onClick={handleOnCloseEnquiry}>
+                        ×
+                    </CloseButton>
+                </TopRow>
+                <div
+                    style={{
+                        display: emailError ? "" : "none",
+                        margin: "24px 0",
+                        color: "red",
+                        fontWeight: "bold"
+                    }}
+                    ref={errorRef}
+                >
+                    {emailError}
+                </div>
 
-            <FieldGroup>
-              <Label htmlFor="subject">Subject</Label>
-              <Input
-                id="subject"
-                name="subject"
-                type="text"
-                autoComplete="off"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-              />
-            </FieldGroup>
+                <Form onSubmit={handleSubmit}>
+                    <FieldGroup>
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            id="name"
+                            name="name"
+                            type="text"
+                            autoComplete="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </FieldGroup>
 
-            <FieldGroup>
-              <Label htmlFor="message">Message</Label>
-              <TextArea
-                id="message"
-                name="message"
-                autoComplete="off"
-                value={formData.message}
-                onChange={handleChange}
-                rows={6}
-                required
-              />
-            </FieldGroup>
+                    <FieldGroup>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            id="email"
+                            name="sender_email"
+                            type="email"
+                            autoComplete="email"
+                            value={formData.sender_email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </FieldGroup>
 
-            <SubmitButton type="submit" value="Submit Enquiry" />
-          </Form>
-        </Modal>
-      </Overlay>
-  );
+                    <FieldGroup>
+                        <Label htmlFor="subject">Subject</Label>
+                        <Input
+                            id="subject"
+                            name="subject"
+                            type="text"
+                            autoComplete="off"
+                            value={formData.subject}
+                            onChange={handleChange}
+                            required
+                        />
+                    </FieldGroup>
+
+                    <FieldGroup>
+                        <Label htmlFor="message">Message</Label>
+                        <TextArea
+                            id="message"
+                            name="message"
+                            autoComplete="off"
+                            value={formData.message}
+                            onChange={handleChange}
+                            rows={6}
+                            required
+                        />
+                    </FieldGroup>
+
+                    <SubmitButton type="submit">
+                        Submit Enquiry
+                    </SubmitButton>
+                </Form>
+            </Modal>
+        </Overlay>
+    );
 }
 
 const Overlay = styled.div`
@@ -232,7 +261,7 @@ const TextArea = styled.textarea`
   resize: vertical;
 `;
 
-const SubmitButton = styled.input`
+const SubmitButton = styled.button`
   margin-top: 0.5rem;
   border: none;
   background: #13141b;
