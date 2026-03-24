@@ -140,20 +140,6 @@ class ContactRequest(models.Model):
         return f'Contact Request form {self.sender_email}'
 
 
-# ================================= Orders ======================================================
-# class Order(models.Model):
-#     customer_name = models.CharField(max_length=255, null=True)
-#     customer_email = models.EmailField(null=True)
-#     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-#     order_created_at = models.DateTimeField(auto_now_add=True)
-#     order_finished_at = models.DateTimeField(auto_now=True)
-#     finished = models.BooleanField(default=False)
-#     notes = models.TextField(null=True, blank=True)
-#
-#     def __str__(self):
-#         return f"{self.customer_email} -> order: {self.product.id}"
-
-
 # ================================= About page ======================================================
 class AboutPage(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
@@ -162,3 +148,18 @@ class AboutPage(models.Model):
 
     def __str__(self):
         return f"Paragraph id: {self.id}"
+
+
+# # ================================= Orders ======================================================
+# class Order(models.Model):
+#     customer_name = models.CharField(max_length=255, null=True)
+#     customer_email = models.EmailField(null=True)
+#     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
+#     order_created_at = models.DateTimeField(auto_now_add=True)
+#     order_finished_at = models.DateTimeField(auto_now=True)
+#     finished = models.BooleanField(default=False)
+#     notes = models.TextField(null=True, blank=True)
+#
+#     def __str__(self):
+#         return f"{self.customer_email} -> order: {self.product.id} - {self.product.title}"
+

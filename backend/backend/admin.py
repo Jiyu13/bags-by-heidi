@@ -80,3 +80,11 @@ class AboutPageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(AboutPage, AboutPageAdmin)
+
+
+# # ================================= Order page ===================================================
+# class OrderAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'customer_name', 'customer_email', 'paragraph_image')
+#
+#
+# admin.site.register(AboutPage, AboutPageAdmin)
