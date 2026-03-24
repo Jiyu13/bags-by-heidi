@@ -42,7 +42,7 @@ export default function About() {
                                 key={index} $reverse={index % 2 !== 0}
                             >
                                 <ImageContainer className="paragraph-iamge-container">
-                                    <Img src={paragraph?.paragraph_image} alt="about image" loading="eagar"/>
+                                    <Img src={paragraph?.paragraph_image} alt="about image" loading="eager"/>
                                 </ImageContainer>
                                 <TextContainer className="paragraph-text-container">
                                     <ParagraphTitle>{paragraph?.title}</ParagraphTitle>
@@ -95,7 +95,7 @@ const ParagraphTitle = styled.h1`
 `
 const ImageContainer = styled.div`
   flex: 1;
-  height: 320px;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
 `;
 
