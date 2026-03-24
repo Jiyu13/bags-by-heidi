@@ -30,6 +30,7 @@ export default function BagItem({product}) {
 
                 <ProductContent className="product-content-container">
                     <ProductTitle>{product?.title}</ProductTitle>
+                    <ProductPrice>${product?.price}</ProductPrice>
                 </ProductContent>
             </ItemCard>
         </ItemContainer>
@@ -88,12 +89,15 @@ const ProductContent = styled.div`
   padding: 0.8rem 0 1rem;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
 `
 
 const ProductTitle = styled.h3`
-    font-size: 1rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.4;
   margin: 0;
+`
+const ProductPrice = styled.div`
+  font-size: 0.9rem;
 `
