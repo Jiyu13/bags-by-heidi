@@ -25,6 +25,14 @@ export default function CustomerFeed() {
                 <FeedTitle className="feed-title">{homeCustomerFeedbackSection?.title}</FeedTitle>
                 <FeedDescription className="feed-description">
                   {homeCustomerFeedbackSection?.description}
+                    <span style={{padding: "0 0.5rem", fontWeight: "Bold"}}>
+                        <a
+                            style={{color: "inherit", fontSize: "inherit"}}
+                            href="/customer-feedback/gallery"
+                        >
+                            View more here
+                        </a>
+                    </span>
                 </FeedDescription>
               </FeedHeader>
 
@@ -35,6 +43,7 @@ export default function CustomerFeed() {
                     </FeedItem>
                   ))}
               </FeedGrid>
+
             </FeedInner>
       </FeedSection>
     );
