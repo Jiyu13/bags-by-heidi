@@ -1,42 +1,107 @@
-import about_image from "../assets/images/about-image.jpg";
 import styled from "styled-components";
-import {PageContainer, PageText, PageTitle, PageWrapper} from "./Contact";
+import { PageText, PageTitle, PageTittleContainer} from "./Contact";
+import {useEffect, useState} from "react";
+import {publicApi} from "../api";
 
 export default function About() {
+    const [aboutParagraphs, setAboutParagraphs] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        async function getAboutParagraphs() {
+            try {
+                setLoading(true)
+                const res = await publicApi.get(`/about/`)
+                const result = res.data
+                setAboutParagraphs(result)
+            } catch (error) {
+                console.log("failed to get about paragraphs",  error.response.data)
+            } finally {
+                setLoading(false)
+            }
+        }
+        getAboutParagraphs()
+    }, [])
+
+    if (loading) return null
+
     return (
-        <PageContainer style={{display: "flex"}}>
-            <PageWrapper>
+        <Section className="about-paragraph-section">
+            <Inner>
 
-                <PageTitle>OUR STORY</PageTitle>
+                <PageTittleContainer className="about-paragraph-title-container">
+                    <PageTitle>About Us</PageTitle>
+                </PageTittleContainer>
 
-                <TextContainer>
-                    <PageText>Description about your and your products. </PageText>
-                    <PageText>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </PageText>
-                </TextContainer>
+                <AboutParagraphsList className="about-paragraph-list">
+                    {aboutParagraphs?.map((paragraph, index) => {
 
-                <ImageContainer>
-                    <Img src={about_image} alt="about image"/>
-                </ImageContainer>
+                        return (
+                            <AboutParagraphItem
+                                className="about-paragraph-item"
+                                key={index} $reverse={index % 2 !== 0}
+                            >
+                                <ImageContainer className="paragraph-iamge-container">
+                                    <Img src={paragraph?.paragraph_image} alt="about image" loading="eagar"/>
+                                </ImageContainer>
+                                <TextContainer className="paragraph-text-container">
+                                    <ParagraphTitle>{paragraph?.title}</ParagraphTitle>
+                                    <PageText>{paragraph?.paragraph}</PageText>
+                                </TextContainer>
 
-            </PageWrapper>
-        </PageContainer>
+
+                            </AboutParagraphItem>
+                        )
+                    })}
+                </AboutParagraphsList>
+
+
+
+
+            </Inner>
+        </Section>
     )
 }
-
-
-const TextContainer = styled.div`
-  margin-top: 2rem;
+const Section = styled.section`
+  width: 100%;
 `;
 
+const Inner = styled.div`
+  width: min(1400px, calc(100% - 3rem));
+  margin: 0 auto;
+`;
+
+const AboutParagraphsList = styled.ul`
+    list-style-type: none;
+  padding-left: 0;
+`
+const AboutParagraphItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  margin: 5rem 0;
+  flex-direction: ${({ $reverse }) => ($reverse ? "row-reverse" : "row")};
+
+  @media (max-width: 868px) {
+    flex-direction: column; // stack on mobile
+  }
+`
+const TextContainer = styled.div`
+  flex: 1;
+`;
+const ParagraphTitle = styled.h1`
+  font-size: 2rem;
+  text-align: center;
+`
 const ImageContainer = styled.div`
-  margin-top: 2.5rem;
+  flex: 1;
+  height: 320px;
+  overflow: hidden;
 `;
 
 const Img = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  border-radius: 4px;
 `;
