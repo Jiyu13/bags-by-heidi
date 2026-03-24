@@ -76,3 +76,9 @@ class ContactRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactRequest
         fields = '__all__'
+
+
+class AboutPageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutPage
+        fields = '__all__'

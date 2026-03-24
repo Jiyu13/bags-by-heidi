@@ -175,3 +175,12 @@ class CreateContactRequestView(CreateAPIView):
             # Handle email sending errors
             return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class GetAboutPageView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
+    def get(self, request):
+        about_paragraphs = AboutPage.objects.all()
+        serializer = AboutPageSerializer(about_paragraphs, many=True, context={"request": request})
+        return Response(serializer.data)

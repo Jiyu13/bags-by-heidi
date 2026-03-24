@@ -72,3 +72,11 @@ class ContactRequestAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ContactRequest, ContactRequestAdmin)
+
+
+# ================================= About page ===================================================
+class AboutPageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'paragraph', 'paragraph_image')
+
+
+admin.site.register(AboutPage, AboutPageAdmin)
