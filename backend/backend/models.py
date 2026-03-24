@@ -52,29 +52,18 @@ class ProductCategory(models.Model):
     def __str__(self):
         return self.category
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #
-    #     if self.cover_image:
-    #         self.cover_image.name = process_image(self.cover_image)
-    #         super().save(update_fields=["cover_image"])
-
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField()
     image = models.ImageField(null=True, blank=True, upload_to='product-images/')
     category = models.ForeignKey(ProductCategory, null=True, on_delete=models.CASCADE)
+    material = models.TextField(null=True, blank=True)
+    size = models.TextField(null=True, blank=True)
+    price = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.id} - {self.title}"
-
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #
-    #     if self.image:
-    #         self.image.name = process_image(self.image)
-    #         super().save(update_fields=["image"])
 
 
 class ProductImage(models.Model):
@@ -148,3 +137,26 @@ class ContactRequest(models.Model):
 
     def __str__(self):
         return f'Contact Request form {self.sender_email}'
+
+
+# ================================= Orders ======================================================
+# class Order(models.Model):
+#     customer_name = models.CharField(max_length=255, null=True)
+#     customer_email = models.EmailField(null=True)
+#     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+#     order_created_at = models.DateTimeField(auto_now_add=True)
+#     order_finished_at = models.DateTimeField(auto_now=True)
+#     finished = models.BooleanField(default=False)
+#     notes = models.TextField(null=True, blank=True)
+#
+#     def __str__(self):
+#         return f"{self.customer_email} -> order: {self.product.id}"
+
+
+# ================================= About page ======================================================
+# class AboutPage(models.Model):
+#     paragraph = models.TextField(null=True, blank=True)
+#     paragraph_image = models.ImageField(null=True, blank=True, upload_to='about-page-images/')
+#
+#     def __str__(self):
+#         return f"Paragraph id: {self.id}"

@@ -24,7 +24,7 @@ class ProductImageInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description", "image", "category")
+    list_display = ("id", "title", "description", "image", "category", 'material', "size", "price")
     inlines = [ProductImageInline]
 
 
