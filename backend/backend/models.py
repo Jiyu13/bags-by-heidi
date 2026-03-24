@@ -155,9 +155,10 @@ class ContactRequest(models.Model):
 
 
 # ================================= About page ======================================================
-# class AboutPage(models.Model):
-#     paragraph = models.TextField(null=True, blank=True)
-#     paragraph_image = models.ImageField(null=True, blank=True, upload_to='about-page-images/')
-#
-#     def __str__(self):
-#         return f"Paragraph id: {self.id}"
+class AboutPage(models.Model):
+    title = models.CharField(max_length=255, null=True, blank=True)
+    paragraph = models.TextField(null=True, blank=True)
+    paragraph_image = models.ImageField(null=True, blank=True, upload_to='about-page-images/')
+
+    def __str__(self):
+        return f"Paragraph id: {self.id}"
