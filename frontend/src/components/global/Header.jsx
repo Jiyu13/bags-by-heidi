@@ -191,7 +191,7 @@ const LinkItem = styled.li`
 
 const Link = styled.a`
   text-decoration: none;
-  color: rgba(244, 245, 234, .6);;
+  color: rgba(244, 245, 234, .6);
   font-size: inherit;
 
 
