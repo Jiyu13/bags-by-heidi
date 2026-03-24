@@ -131,6 +131,7 @@ class CustomerFeedback(models.Model):
 class ContactRequest(models.Model):
     name = models.CharField(max_length=255, null=True)
     sender_email = models.EmailField(null=True)
+    subject = models.TextField(null=True, blank=True)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     solved = models.BooleanField(default=False)
