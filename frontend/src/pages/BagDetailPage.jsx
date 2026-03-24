@@ -4,6 +4,8 @@ import {useContext, useEffect, useState} from "react";
 import {publicApi} from "../api";
 import {UserContext} from "../user-content/UserContent";
 import {useParams} from "react-router-dom";
+import {ButtonRow, SubmitInputButton} from "./Contact";
+import PopupEnquiryForm from "../components/bag-detail/PopupEnquiryForm";
 
 export default function BagDetailPage() {
     const {isMobile} = useContext(UserContext)
@@ -12,6 +14,7 @@ export default function BagDetailPage() {
 
     const [productDetail, setProductDetail] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
     useEffect(() => {
         async function getDetail() {
@@ -29,6 +32,10 @@ export default function BagDetailPage() {
         getDetail()
     }, [id])
 
+    function handleMakeEnquiry() {
+        setIsEnquiryOpen(true)
+    }
+
     if (loading) {return null}
 
     return (
@@ -44,6 +51,21 @@ export default function BagDetailPage() {
                 {/* =================== Detail ================*/}
                 <DetailSection $isMobile={isMobile} className='detail-section'>
                     <ProductTitle>{productDetail?.title}</ProductTitle>
+                    <ProductPrice>${productDetail?.price}</ProductPrice>
+
+                    {/* --------------- a send an email button ---------------------------*/}
+                    <EnquiryContainer className="make-an-enquiry-container">
+                        <EnquiryText className="enquiry-text">For more details:</EnquiryText>
+                        <EnquiryButtonContainer className="enquiry-button-container">
+                            <EnquiryButton
+                                className="enquiry-button"
+                                type="button"
+                                value="Make An Enquiry"
+                                onClick={handleMakeEnquiry}
+                            />
+                        </EnquiryButtonContainer>
+                    </EnquiryContainer>
+
                     <ProductDescription>
                         {productDetail?.description}
                     </ProductDescription>
@@ -59,7 +81,6 @@ export default function BagDetailPage() {
                                 {productDetail?.size}
 
                             </DescriptionItem>
-                            {/*<DescriptionItem>other features</DescriptionItem>*/}
 
                         </ul>
                     </DescriptionContainer>
@@ -67,6 +88,15 @@ export default function BagDetailPage() {
                 </DetailSection>
 
             </DetailPageWrapper>
+
+            {isEnquiryOpen && (
+                <PopupEnquiryForm
+                    isOpen={isEnquiryOpen}
+                    onClose={() => setIsEnquiryOpen(false)}
+                    productTitle={productDetail?.title}
+                />
+            )}
+
         </DetailPageContainer>
     )
 }
@@ -118,13 +148,31 @@ const ProductTitle = styled.h1`
   margin-top: 0;
   margin-bottom: 1rem;
 `
+const ProductPrice = styled.p`
+  font-size: 1.2rem;
+`
 const ProductDescription = styled.p`
   padding: 1rem 0;
 `
+const EnquiryContainer = styled.div`
+    margin: 1.5rem 0 0;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid rgb(211, 211, 211);
+  
+`
+const EnquiryText = styled.div`
+  font-size: 0.9rem;
+  margin: 0.2rem 0 0.5rem;
+`
+const EnquiryButtonContainer = styled(ButtonRow)`
+  
+`
+const EnquiryButton = styled(SubmitInputButton)`
+  margin: 0;
+`
 const DescriptionContainer = styled.div`
-    color: rgba(40,44,52, 0.6);
-    font-size: 0.9rem;
-    border-top: 1px solid #eaeaea;
+  color: rgba(40, 44, 52, 0.6);
+  font-size: 0.9rem;
 `
 
 const DescriptionItem = styled.li`
