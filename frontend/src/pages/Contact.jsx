@@ -10,6 +10,7 @@ export default function Contact() {
     const initialValue = {
         name: "",
         sender_email: "",
+        subject: "",
         message: "",
     }
 
@@ -26,6 +27,7 @@ export default function Contact() {
         const formObject = {
             name: formData.name,
             sender_email: formData.sender_email,
+            subject: formData.subject,
             message: formData.message,
         }
 
@@ -65,6 +67,7 @@ export default function Contact() {
         setFormData({
             name: "",
             sender_email: "",
+            subject: "",
             message: "",
             // attachments: "",
         })
@@ -135,6 +138,15 @@ export default function Contact() {
                             type="email"
                             name='sender_email'
                             value={formData?.sender_email}
+                            onChange={handleOnchange}
+                            required
+                        />
+                    </FieldBox>
+                    <FieldBox>
+                        <FormLabel>Subject </FormLabel>
+                        <FormInput
+                            name='subject'
+                            value={formData?.subject}
                             onChange={handleOnchange}
                             required
                         />
