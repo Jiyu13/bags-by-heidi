@@ -58,6 +58,8 @@ export const Img = styled.img`
   object-fit: cover;
   opacity: ${props => (props.$loaded ? 1 : 0)};
   transition: opacity 0.6s ease;
+    z-index: 2;
+
 
 `;
 
