@@ -12,9 +12,10 @@ export function ProductImagesSection({coverImage, otherImages}) {
 
 
     function cleanImageUrl(url){
-        if (url) {
-            return url?.startsWith("http") ? url : `http://127.0.0.1:8000${url}`
-        }
+        if (!url) return "";
+        if (url.startsWith("http")) return url;
+
+        return `${process.env.REACT_APP_API_URL}${url}`
     }
 
     const allImages = useMemo(() => {
@@ -22,7 +23,7 @@ export function ProductImagesSection({coverImage, otherImages}) {
 
         if (coverImage) {
             images.push({
-                src: coverImage, //cleanImageUrl(coverImage),
+                src: cleanImageUrl(coverImage),
                 alt: "cover-image",
             });
         }
@@ -31,7 +32,7 @@ export function ProductImagesSection({coverImage, otherImages}) {
             otherImages.forEach((image, index) => {
                 if (image?.product_image) {
                     images.push({
-                        src: image.product_image, //cleanImageUrl(image.product_image),
+                        src: cleanImageUrl(image.product_image),
                         alt: image.alt || `product-image-${index + 1}`,
                     });
                 }
@@ -123,6 +124,7 @@ const ProductImageContainer = styled.div`
 
   &::-webkit-scrollbar {
     display: none;
+  }
 `;
 const MainImageList = styled.ul`
   margin: 0 0 16px 0;
