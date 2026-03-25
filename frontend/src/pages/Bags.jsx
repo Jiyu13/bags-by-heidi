@@ -12,6 +12,7 @@ export default function Bags() {
     const {productCategories} = useContext(UserContext)
     const [items, setItems] = useState(null)
     const [loaded, setLoaded] = useState(false)
+    const [loadingPage, setLoadingPage] = useState(true)
 
 
 
@@ -22,16 +23,21 @@ export default function Bags() {
     useEffect(() => {
         async function getProductCategories() {
             try {
+                setLoadingPage(true)
+
                 const res = await publicApi.get(`/products/${category_name}/`)
                 const result = res.data
                 setItems(result)
             } catch (error) {
                 console.log("failed to get products",  error.response.data)
+            } finally {
+                setLoadingPage(false)
             }
         }
         getProductCategories()
     }, [category_name])
 
+    if (loadingPage) {return null}
 
     return (
         <ProductPageContainer className='product-page-container'>
@@ -136,7 +142,6 @@ const ListContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  padding: 0;
   //margin: 0;
   --gap: 1.5rem;
   gap: var(--gap);
