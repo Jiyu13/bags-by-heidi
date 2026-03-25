@@ -184,7 +184,7 @@ export default function PopupEnquiryForm({isOpen, setIsEnquiryOpen, productTitle
     );
 }
 
-const Overlay = styled.div`
+export const Overlay = styled.div`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
@@ -195,7 +195,7 @@ const Overlay = styled.div`
   padding: 1rem;
 `;
 
-const Modal = styled.div`
+export const Modal = styled.div`
   width: 100%;
   max-width: 560px;
   background: #fff;
@@ -217,7 +217,7 @@ const Title = styled.h2`
   font-size: 1.4rem;
 `;
 
-const CloseButton = styled.button`
+export const CloseButton = styled.button`
   border: none;
   background: transparent;
   font-size: 1.8rem;
