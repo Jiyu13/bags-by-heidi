@@ -29,6 +29,7 @@ export function Footer() {
                             <FooterItem><FooterLink href="/customer-feedback/gallery">Gallery</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/about">About</FooterLink></FooterItem>
                             <FooterItem><FooterLink href="/contact">Contact</FooterLink></FooterItem>
+                            <FooterItem><FooterLink href="/faqs">FAQs</FooterLink></FooterItem>
                         </FooterList>
                     </FooterColumn>
 

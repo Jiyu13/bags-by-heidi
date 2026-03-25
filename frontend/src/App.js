@@ -14,6 +14,7 @@ import {Footer} from "./components/global/Footer";
 import {useMediaQuery} from "react-responsive";
 import BagDetailPage from "./pages/BagDetailPage";
 import Gallery from "./pages/Gallery";
+import FAQs from "./pages/FAQs";
 
 
 function App() {
@@ -125,6 +126,7 @@ function App() {
                         <Route exact path="/:category_name/:id/:product_name" element={<BagDetailPage />}/>
                         <Route exact path="/about" element={<About />}/>
                         <Route exact path="/contact" element={<Contact />} />
+                        <Route exact path='/faqs' element={<FAQs />} />
                         <Route exact path='/login' element={<Login />} />
                         <Route exact path="/" element={<Home />}/>
                     </Routes>
