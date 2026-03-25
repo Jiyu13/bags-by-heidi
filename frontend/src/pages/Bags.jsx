@@ -7,6 +7,7 @@ import BagItem from "../components/bags-page/BagItem";
 import {publicApi} from "../api";
 import {Img, SectionContent, Title} from "../components/homepage/HomeBanner";
 import {upperCategoryName} from "../utils/cleanCategoryName";
+import {BannerSkeleton} from "../components/skeletons/skeletons";
 
 export default function Bags() {
     const {productCategories} = useContext(UserContext)
@@ -37,11 +38,17 @@ export default function Bags() {
         getProductCategories()
     }, [category_name])
 
+    useEffect(() => {
+        setLoaded(false)
+    }, [category_name])
+
     if (loadingPage) {return null}
 
     return (
         <ProductPageContainer className='product-page-container'>
             <ProductPageBannerContainer className="category-cover-image-container">
+                {!loaded && <BannerSkeleton />}
+
                 <Img
                     src={currentCategory?.cover_image}
                     alt="category-cover-image"
@@ -106,6 +113,7 @@ const ProductPageBannerContainer = styled.div`
 `
 const ProductPageTittleWrapper = styled(SectionContent)`
   width: auto;
+  z-index: 3;
 `
 const ProductPageTittle = styled(Title)`
   background-color: rgba(40, 44, 52, 0.5);
