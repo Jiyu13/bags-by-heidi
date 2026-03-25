@@ -22,7 +22,7 @@ export function ProductImagesSection({coverImage, otherImages}) {
 
         if (coverImage) {
             images.push({
-                src: cleanImageUrl(coverImage),
+                src: coverImage, //cleanImageUrl(coverImage),
                 alt: "cover-image",
             });
         }
@@ -31,7 +31,7 @@ export function ProductImagesSection({coverImage, otherImages}) {
             otherImages.forEach((image, index) => {
                 if (image?.product_image) {
                     images.push({
-                        src: cleanImageUrl(image.product_image),
+                        src: image.product_image, //cleanImageUrl(image.product_image),
                         alt: image.alt || `product-image-${index + 1}`,
                     });
                 }
