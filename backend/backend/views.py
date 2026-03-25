@@ -1,3 +1,5 @@
+import logging
+
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -11,6 +13,7 @@ from .models import *
 from .serializers import *
 from .permissions import IsSuperUserOrReadOnly
 
+logger = logging.getLogger(__name__)
 
 class AppUserView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -131,11 +134,16 @@ class CreateContactRequestView(CreateAPIView):
 
         contact_request = serializer.save()
         # =========================================Compose the email content============================================
-        notification_subject = "New Ticket" + " -- " + contact_request.subject
-        user_email = contact_request.sender_email
+        subject_clean = (contact_request.subject or "").replace("\r", " ").replace("\n", " ").strip()
+        sender_email = (contact_request.sender_email or "").strip()
+        name = (contact_request.name or "").strip()
+        message = (contact_request.message or "").strip()
+
+        notification_subject = "New Ticket" + " -- " + subject_clean
+        user_email = sender_email
         notification_message = (
-            f'From: {contact_request.name} -- {user_email}\n\n'
-            f'{contact_request.message}'
+            f'From: {name} -- {user_email}\n\n'
+            f'{message}'
         )
 
         try:
@@ -148,10 +156,10 @@ class CreateContactRequestView(CreateAPIView):
                 fail_silently=False
             )
             # ==================Send a auto-reply email to user ========================================================
-            auto_reply_subject = "Bags by Heidi" + " - Email Received! -->" + contact_request.subject
+            auto_reply_subject = "Bags by Heidi" + " - Email Received! -->" + subject_clean
 
             auto_reply_message = (
-                f"Hello {contact_request.name},\n\n"
+                f"Hello {name},\n\n"
                 f"We would like to acknowledge that we have received your request and a ticket has been created. \n"
                 f"We will be reviewing your request and will send you a personal response shortly.\n\n"
                 f"Thank you for your patience. \n\n"
@@ -173,7 +181,12 @@ class CreateContactRequestView(CreateAPIView):
 
         except Exception as e:
             # Handle email sending errors
-            return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logger.exception("Email sending failed")
+            return Response(
+                {'error': f'Failed to send email: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
