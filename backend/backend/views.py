@@ -134,15 +134,17 @@ class CreateContactRequestView(CreateAPIView):
 
         contact_request = serializer.save()
         # =========================================Compose the email content============================================
+        contact_id = contact_request.id
         subject_clean = (contact_request.subject or "").replace("\r", " ").replace("\n", " ").strip()
         sender_email = (contact_request.sender_email or "").strip()
         name = (contact_request.name or "").strip()
         message = (contact_request.message or "").strip()
 
-        notification_subject = "New Ticket" + " -- " + subject_clean
+        notification_subject = f"No.{contact_id}" + " --> " + subject_clean
         user_email = sender_email
         notification_message = (
             f'From: {name} -- {user_email}\n\n'
+            f'Subject: {subject_clean}\n\n'
             f'{message}'
         )
 
@@ -155,29 +157,48 @@ class CreateContactRequestView(CreateAPIView):
                 [settings.EMAIL_HOST_USER],
                 fail_silently=False
             )
-            # ==================Send a auto-reply email to user ========================================================
-            auto_reply_subject = "Bags by Heidi" + " - Email Received! -->" + subject_clean
-
-            auto_reply_message = (
-                f"Hello {name},\n\n"
-                f"We would like to acknowledge that we have received your request and a ticket has been created. \n"
-                f"We will be reviewing your request and will send you a personal response shortly.\n\n"
-                f"Thank you for your patience. \n\n"
-                f"Sincerely,\n\n"
-                f"Sent by Bags by Heidi"
-            )
-
-            # Specify the email address where you want to receive notifications
-            autor_reply_receiver_email = user_email
-
-            # Send the notification email
-            send_mail(
-                auto_reply_subject,
-                auto_reply_message,
-                settings.EMAIL_HOST_USER,
-                [autor_reply_receiver_email],
-                fail_silently=False
-            )
+            # # ==================Send a auto-reply email to user ======================================================
+            # auto_reply_subject = "Bags by Heidi" + " - Email Received! -->"
+            # plain_text_message = (
+            #     f"Hello {name},\n\n"
+            #     f"We would like to acknowledge that we have received your request about \"{subject_clean}\" and a ticket has been created. \n"
+            #     f"We will be reviewing your request and will send you a personal response shortly.\n\n"
+            #     f"Thank you for your patience. \n\n"
+            #     f"Sincerely,\n\n"
+            #     f"Sent by Bags by Heidi"
+            # )
+            # auto_reply_message = f"""
+            #     Hello {name},<br><br>
+            #
+            #     We would like to acknowledge that we have received your request about
+            #     <strong>{subject_clean}</strong> and a ticket has been created.<br><br>
+            #
+            #     We will be reviewing your request and will send you a personal response shortly.<br><br>
+            #
+            #     Thank you for your patience.<br><br>
+            #
+            #     Sincerely,<br><br>
+            #     Sent by Bags by Heidi
+            # """
+            #
+            # # Specify the email address where you want to receive notifications
+            # autor_reply_receiver_email = user_email
+            #
+            # # Send the notification email
+            # # send_mail(
+            # #     auto_reply_subject,
+            # #     auto_reply_message,
+            # #     settings.EMAIL_HOST_USER,
+            # #     [autor_reply_receiver_email],
+            # #     fail_silently=False
+            # # )
+            # send_mail(
+            #     auto_reply_subject,
+            #     plain_text_message,  # keep a fallback
+            #     settings.EMAIL_HOST_USER,
+            #     [autor_reply_receiver_email],
+            #     html_message=auto_reply_message,
+            # )
 
         except Exception as e:
             # Handle email sending errors
