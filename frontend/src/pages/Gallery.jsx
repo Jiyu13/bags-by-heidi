@@ -2,11 +2,13 @@ import {useContext, useMemo, useState} from "react";
 import styled from "styled-components";
 import {UserContext} from "../user-content/UserContent";
 import {PageText, PageTitle, PageTittleContainer} from "./Contact";
+import SelectedReviewPopup from "../components/gallery/SelectedReviewPopup";
 
 export default function Gallery() {
     const {customerFeedback} = useContext(UserContext)
 
     const [visibleCount, setVisibleCount] = useState(6);
+    const [selectedReview, setSelectedReview] = useState(null)
     const reviews = customerFeedback || [];
 
     const visibleReviews = useMemo(() => {
@@ -15,6 +17,18 @@ export default function Gallery() {
 
     function handleShowMore() {
         setVisibleCount((prev) => prev + 6);
+    }
+
+    function truncate(text, max = 180) {
+        if (!text) return "";
+        return text.length > max ? text.slice(0, max) + "..." : text;
+    }
+
+    function openReview(review) {
+        setSelectedReview(review);
+    }
+    function closeReview() {
+        setSelectedReview(null);
     }
 
     return (
@@ -28,7 +42,18 @@ export default function Gallery() {
 
                 <ReviewsGrid className="gallery-review-grid">
                     {visibleReviews.map((review) => (
-                        <ReviewCard key={review.id} className="gallery-review-card">
+
+                        <ReviewCard
+                            key={review.id}
+                            className="gallery-review-card"
+                            onClick={() => openReview(review)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    openReview(review);
+                                }
+                            }}
+                        >
                             {review.image && (
                                 <ReviewImageWrapper className="gallery-review-image-wrapper">
                                     <ReviewImage
@@ -45,7 +70,7 @@ export default function Gallery() {
                                 <ReviewDate>{review.review_date}</ReviewDate>
 
 
-                                <ReviewText>{review.comment}</ReviewText>
+                                <ReviewText>{truncate(review.comment)}</ReviewText>
 
                                 {/*{review.item_type && (*/}
                                 {/*    <MetaRow>*/}
@@ -65,6 +90,13 @@ export default function Gallery() {
                         </LoadMoreButton>
                     </LoadMoreWrapper>
                 )}
+
+                {selectedReview && (
+                    <SelectedReviewPopup
+                        closeReview={closeReview}
+                        selectedReview={selectedReview}
+                    />
+                ) }
             </Inner>
         </Section>
     );
