@@ -82,6 +82,13 @@ class AboutPageAdmin(admin.ModelAdmin):
 admin.site.register(AboutPage, AboutPageAdmin)
 
 
+# # ================================= faqs page ===================================================
+class FaqAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'answer')
+
+
+admin.site.register(FAQ, FaqAdmin)
+
 # # ================================= Order page ===================================================
 # class OrderAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'customer_name', 'customer_email', 'paragraph_image')

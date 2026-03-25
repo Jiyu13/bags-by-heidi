@@ -40,6 +40,7 @@ urlpatterns = [
     path("customer_feedback/", GetCustomerFeedbackView.as_view(), name="customer-feedback"),
 
     path('about/', GetAboutPageView.as_view(), name='about-page'),
+    path('faqs/', GetFAQsPageView.as_view(), name='faqs-page'),
 
     path('contact-requests/create/', CreateContactRequestView.as_view(), name='create-contact-request'),
 

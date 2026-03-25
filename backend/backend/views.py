@@ -218,3 +218,12 @@ class GetAboutPageView(APIView):
         about_paragraphs = AboutPage.objects.all()
         serializer = AboutPageSerializer(about_paragraphs, many=True, context={"request": request})
         return Response(serializer.data)
+
+
+class GetFAQsPageView(APIView):
+    permission_classes = [IsSuperUserOrReadOnly]
+
+    def get(self, request):
+        faqs = FAQ.objects.all()
+        serializer = FaqSerializer(faqs, many=True, context={"request": request})
+        return Response(serializer.data)

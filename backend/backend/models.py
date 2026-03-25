@@ -150,6 +150,16 @@ class AboutPage(models.Model):
         return f"Paragraph id: {self.id}"
 
 
+# ================================= About page ======================================================
+class FAQ(models.Model):
+    question = models.TextField()
+    answer = models.JSONField(null=True, blank=True)
+
+    def __str__(self):
+        return f"question id: {self.id}"
+
+
+
 # # ================================= Orders ======================================================
 # class Order(models.Model):
 #     customer_name = models.CharField(max_length=255, null=True)

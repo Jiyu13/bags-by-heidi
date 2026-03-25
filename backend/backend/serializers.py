@@ -84,6 +84,12 @@ class AboutPageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FaqSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = '__all__'
+
+
 # class OrderSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Order
