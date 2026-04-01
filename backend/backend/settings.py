@@ -29,14 +29,20 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = 'django-insecure-#za(*3jcym81+3tohn6bjqvw_5cidx2m9225s$!0ekp8x6vbq^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["bagsbyheidi.com", "www.bagsbyheidi.com", "23.187.248.104"]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    "https://bagsbyheidi.com",
+    "https://www.bagsbyheidi.com",
 ]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://bagsbyheidi.com",
+    "https://www.bagsbyheidi.com",
+    # "https://api.bagsbyheidi.com",
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -158,7 +164,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True       # removed for production
 CORS_ALLOW_CREDENTIALS = True
 
 # ============================================== smtp ===========================================
@@ -169,8 +175,6 @@ CORS_ALLOW_CREDENTIALS = True
 # print("EMAIL_HOST:", config('EMAIL_HOST'))
 # print("EMAIL_HOST_USER:", config('EMAIL_HOST_USER'))
 # print("EMAIL_HOST_PASSWORD:", config('EMAIL_HOST_PASSWORD'))
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
