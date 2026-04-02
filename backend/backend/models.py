@@ -61,6 +61,7 @@ class Product(models.Model):
     material = models.TextField(null=True, blank=True)
     size = models.TextField(null=True, blank=True)
     price = models.PositiveIntegerField(default=0)
+    # is_available = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.id} - {self.title}"
@@ -112,6 +113,7 @@ class HomepageSection(models.Model):
 
 class SocialMedia(models.Model):
     name = models.CharField(max_length=120, null=True, blank=True)
+    svg_icon = models.FileField(null=True, blank=True, upload_to='social-media-icons/')
     link = models.CharField(max_length=120, null=True, blank=True)
     is_available = models.BooleanField(default=False)
 
