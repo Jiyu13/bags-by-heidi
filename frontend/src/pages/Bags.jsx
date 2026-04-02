@@ -67,12 +67,15 @@ export default function Bags() {
             {items && (
                 <ListContainer className="product-list">
                     {items?.map((item, i) => {
-                        return (
-                            <BagItem
-                                key={item.id}
-                                product={item}
-                            />
-                        )
+                        if (item.is_available) {
+                            return (
+                                <BagItem
+                                    key={item.id}
+                                    product={item}
+                                />
+                            )
+                        }
+
 
                     })}
                 </ListContainer>
