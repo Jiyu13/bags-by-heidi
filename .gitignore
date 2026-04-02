@@ -27,6 +27,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .venv/
+venv/
 .idea
 notes.txt
 studio-bags-by-heidi/
