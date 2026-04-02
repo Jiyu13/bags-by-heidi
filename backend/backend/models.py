@@ -61,7 +61,7 @@ class Product(models.Model):
     material = models.TextField(null=True, blank=True)
     size = models.TextField(null=True, blank=True)
     price = models.PositiveIntegerField(default=0)
-    # is_available = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.id} - {self.title}"
