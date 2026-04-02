@@ -24,7 +24,9 @@ class ProductImageInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "description", "image", "category", 'material', "size", "price")
+    list_display = ("id", "title", "description", "image", "category", 'material', "size", "price",
+                    # "is_available"
+                    )
     inlines = [ProductImageInline]
 
 
@@ -52,7 +54,7 @@ admin.site.register(HomepageSection, HomepageSectionAdmin)
 
 # ================================= social medias ===================================================
 class SocialMediasAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "link")
+    list_display = ("id", "name", "svg_icon", "link", "is_available")
 
 
 admin.site.register(SocialMedia, SocialMediasAdmin)

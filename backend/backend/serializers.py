@@ -63,7 +63,7 @@ class HomepageSectionSerializer(serializers.ModelSerializer):
 class SocialMediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialMedia
-        fields = ["id", "name", "link", "is_available"]
+        fields = ["id", "name", "svg_icon", "link", "is_available"]
 
 
 class CustomerFeedbackSerializer(serializers.ModelSerializer):
