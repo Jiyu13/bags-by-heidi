@@ -12,6 +12,7 @@
 /build
 /frontend/build
 .firebase/*
+backend/staticfiles/
 
 # misc
 .DS_Store
