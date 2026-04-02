@@ -7,7 +7,6 @@ import {UserContext} from "../../user-content/UserContent";
 export function Footer() {
 
     const {socialMedias} = useContext(UserContext)
-    console.log(socialMedias)
 
     return (
         <FooterContainer>
