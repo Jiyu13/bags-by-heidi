@@ -32,6 +32,7 @@ SECRET_KEY = 'django-insecure-#za(*3jcym81+3tohn6bjqvw_5cidx2m9225s$!0ekp8x6vbq^
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    "api.bagsbyheidi.com",
     "bagsbyheidi.com", "www.bagsbyheidi.com", "23.187.248.104",
     "127.0.0.1","localhost",
 ]
@@ -40,11 +41,12 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     "https://bagsbyheidi.com",
     "https://www.bagsbyheidi.com",
+    "https://api.bagsbyheidi.com",
 ]
 CSRF_TRUSTED_ORIGINS = [
+    "https://api.bagsbyheidi.com",
     "https://bagsbyheidi.com",
     "https://www.bagsbyheidi.com",
-    # "https://api.bagsbyheidi.com",
 ]
 
 REST_FRAMEWORK = {
