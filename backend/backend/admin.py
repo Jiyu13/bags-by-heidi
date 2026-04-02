@@ -26,6 +26,8 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "description", "image", "category", 'material', "size", "price", "is_available")
     inlines = [ProductImageInline]
+    fields = ("id", "title", "description", "image", "category", 'material', "size", "price", "is_available")
+    search_fields = ['=name', "=category__category"]
 
 
 class ProductImageAdmin(admin.ModelAdmin):
@@ -53,6 +55,7 @@ admin.site.register(HomepageSection, HomepageSectionAdmin)
 # ================================= social medias ===================================================
 class SocialMediasAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "svg_icon", "link", "is_available")
+    fields = ("name", "svg_icon", "link", "is_available")
 
 
 admin.site.register(SocialMedia, SocialMediasAdmin)
@@ -61,6 +64,8 @@ admin.site.register(SocialMedia, SocialMediasAdmin)
 # ================================= customer feedback ===================================================
 class CustomerFeedbackAdmin(admin.ModelAdmin):
     list_display = ("id", "customer_name", "comment", "image", "published", "review_date")
+    search_fields = ['=customer_name']
+
 
 
 admin.site.register(CustomerFeedback, CustomerFeedbackAdmin)
@@ -69,6 +74,8 @@ admin.site.register(CustomerFeedback, CustomerFeedbackAdmin)
 # ================================= contact ===================================================
 class ContactRequestAdmin(admin.ModelAdmin):
     list_display = ('id', 'sender_email', "subject", 'message', 'created_at', "name", "solved" )
+    search_fields = ['=sender_email']
+
 
 
 admin.site.register(ContactRequest, ContactRequestAdmin)
