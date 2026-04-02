@@ -1,22 +1,13 @@
 import styled from "styled-components";
-import instagram_icon from "../../assets/icons/instagram.svg"
-import facebook_icon from "../../assets/icons/facebook.svg"
-import tiktok_icon from "../../assets/icons/tiktok.svg"
-import pinterest from "../../assets/icons/pinterest.svg"
 import bags_by_heidi from "../../assets/logo/bags-by-heidi-logo.svg"
 import {useContext} from "react";
 import {UserContext} from "../../user-content/UserContent";
 
-const SOCIAL_ICONS = {
-    instagram: instagram_icon,
-    facebook: facebook_icon,
-    tiktok: tiktok_icon,
-    pinterest: pinterest,
-};
 
 export function Footer() {
 
     const {socialMedias} = useContext(UserContext)
+    console.log(socialMedias)
 
     return (
         <FooterContainer>
@@ -53,8 +44,7 @@ export function Footer() {
                                 <SocialMediaIcons>
                                     {socialMedias?.map((sm, index) => {
                                         if (!sm.is_available) return null;
-
-                                        const iconSrc = SOCIAL_ICONS[sm.name?.toLowerCase()];
+                                        const svgIcon = sm.svg_icon
                                         return (
                                             <SocialLink
                                                 href={sm.link}
@@ -62,7 +52,7 @@ export function Footer() {
                                                 target="_blank"
                                                 rel="noreferrer"
                                             >
-                                                <SocialIcon src={iconSrc} alt={sm.name} />
+                                                <SocialIcon src={svgIcon} alt={sm.name} />
                                             </SocialLink>
                                         );
                                     })}
