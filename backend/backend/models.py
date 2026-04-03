@@ -34,6 +34,8 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255)
     email = models.EmailField(max_length=50, unique=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     # use the email as the unique identifier for authentication, instead of the default "username"
     USERNAME_FIELD = 'email'
