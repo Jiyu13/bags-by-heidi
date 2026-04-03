@@ -152,7 +152,7 @@ class CreateContactRequestView(CreateAPIView):
             print("About to send email for contact_id=%s", contact_id)
 
             # # =================Send a notification email =============================================================
-            send_mail(
+            result = send_mail(
                 notification_subject,
                 notification_message,
                 settings.EMAIL_HOST_USER,
