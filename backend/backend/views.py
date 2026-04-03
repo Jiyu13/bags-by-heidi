@@ -149,7 +149,7 @@ class CreateContactRequestView(CreateAPIView):
         )
 
         try:
-            logger.info("About to send email for contact_id=%s", contact_id)
+            print("About to send email for contact_id=%s", contact_id)
 
             # # =================Send a notification email =============================================================
             send_mail(
@@ -160,7 +160,7 @@ class CreateContactRequestView(CreateAPIView):
                 fail_silently=False
             )
 
-            logger.info("Email send result=%s for contact_id=%s", result, contact_id)
+            print("Email send result=%s for contact_id=%s", result, contact_id)
 
             # # ==================Send a auto-reply email to user ======================================================
             # auto_reply_subject = "Bags by Heidi" + " - Email Received! -->"
@@ -208,6 +208,7 @@ class CreateContactRequestView(CreateAPIView):
         except Exception as e:
             # Handle email sending errors
             # return Response({'error': 'Failed to send email.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            print(f"Email sending failed for contact_id={contact_id}: {e}")
             logger.exception("Email sending failed for contact_id=%s", contact_id)
             return Response(
                 {'error': f'Failed to send email: {str(e)}'},
