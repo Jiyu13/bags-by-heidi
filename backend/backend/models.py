@@ -63,6 +63,7 @@ class Product(models.Model):
     material = models.TextField(null=True, blank=True)
     size = models.TextField(null=True, blank=True)
     price = models.PositiveIntegerField(default=0)
+    features = models.JSONField(null=True, blank=True)
     is_available = models.BooleanField(default=True)
 
     def __str__(self):
