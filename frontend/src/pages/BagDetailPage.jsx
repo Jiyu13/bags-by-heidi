@@ -94,6 +94,21 @@ export default function BagDetailPage() {
                         </ul>
                     </DescriptionContainer>
 
+                    <DescriptionContainer className='features-container'>
+                        <ul style={{paddingLeft: "20px"}}>
+                            {productDetail?.features?.map((feature, index) => {
+                                return (
+                                    <DescriptionItem key={index}>
+                                        {feature}
+                                    </DescriptionItem>
+                                )
+                            })}
+
+
+
+                        </ul>
+                    </DescriptionContainer>
+
                 </DetailSection>
 
             </DetailPageWrapper>
