@@ -4,7 +4,8 @@ export function MessageSentSuccessfully() {
     return (
         <ModalContent
             style={{
-                padding: "24px",
+                width: "100%",
+                padding: "24px 0",
                 textAlign: "center",
                 marginBottom: "55px",
                 backgroundColor: "rgba(46, 204, 113, 0.2)"
