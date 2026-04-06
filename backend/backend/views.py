@@ -151,6 +151,11 @@ class CreateContactRequestView(CreateAPIView):
         try:
             print(f"About to send email for contact_id={contact_id}")
 
+            print(notification_subject,
+                  notification_message,
+                  settings.EMAIL_HOST_USER,
+                  [settings.EMAIL_HOST_USER],
+                  )
             # # =================Send a notification email =============================================================
             result = send_mail(
                 notification_subject,
