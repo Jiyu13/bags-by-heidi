@@ -6,6 +6,7 @@ import {MessageSentSuccessfully} from "../components/contact/MessageSentSuccessf
 
 export default function Contact() {
     const [isSent, setIsSent] = useState(false)
+    const [isSending, setIsSending] = useState(false)
     const [emailError, setEmailError] = useState(null)
     const initialValue = {
         name: "",
@@ -24,6 +25,11 @@ export default function Contact() {
 
     function handleSubmitContactForm(e) {
         e.preventDefault()
+
+        setEmailError(null)
+        setIsSent(false)
+        setIsSending(true)
+
         const formObject = {
             name: formData.name,
             sender_email: formData.sender_email,
@@ -60,6 +66,8 @@ export default function Contact() {
                 } else {
                     setEmailError("Network error. Please try again.");
                 }
+            } finally {
+                setIsSending(false)
             }
 
         }
@@ -69,12 +77,24 @@ export default function Contact() {
             sender_email: "",
             subject: "",
             message: "",
-            // attachments: "",
         })
 
     }
 
-    let errorRef = useRef()
+
+    // ------------------- scroll up  to message sent successfully -----------------------------------------------------
+    const sentMessageRef = useRef(null)
+    useEffect(() => {
+        if (isSent && sentMessageRef.current) {
+            sentMessageRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            })
+        }
+    }, [isSent])
+
+    // ------------------- error message -------------------------------------------------------------------------------
+    let errorRef = useRef(null)
     useEffect(() => {
         let handler = (e) => {
             if (emailError && errorRef.current && !errorRef.current.contains(e.target)){
@@ -87,6 +107,16 @@ export default function Contact() {
             document.removeEventListener("mousedown", handler)
         }
     }, [emailError]);
+
+    // ------------------- scroll up to error message ------- ----------------------------------------------------------
+    useEffect(() => {
+        if (emailError && errorRef.current) {
+            errorRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            })
+        }
+    }, [emailError])
 
 
     return (
@@ -112,14 +142,18 @@ export default function Contact() {
                     {emailError}
                 </div>
 
+                {isSent && (
+                        <div ref={sentMessageRef}>
+                            <MessageSentSuccessfully />
+                        </div>
+                    )
+                }
+
+
                 <Form
                     className='contact-form'
                     onSubmit={handleSubmitContactForm}
                 >
-
-                    {isSent && (<MessageSentSuccessfully />)}
-
-
                     <FieldBox>
                         <FormLabel>Name</FormLabel>
                         <FormInput
@@ -165,12 +199,12 @@ export default function Contact() {
                     <ButtonRow style={{display: "flex", justifyContent: "center", gap: "0.8rem"}}>
                         <SubmitInputButton
                             type="submit"
-                            value='Send'
-                            // disabled={disabledButton}
-                            // style={{
-                            //     backgroundColor: disabledButton ? "rgba(40,44,52,.7)" : "rgba(40,44,52, 1)",
-                            //     cursor: disabledButton ? "no-drop" : "pointer",
-                            // }}
+                            value={isSending ? "Sending..." : "Send"}
+                            disabled={isSending}
+                            style={{
+                                backgroundColor: isSending ? "rgba(40,44,52,.5)" : "rgba(40,44,52, 1)",
+                                cursor: isSending ? "no-drop" : "pointer",
+                            }}
                         />
                     </ButtonRow>
                 </Form>
