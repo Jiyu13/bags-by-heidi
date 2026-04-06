@@ -149,7 +149,7 @@ class CreateContactRequestView(CreateAPIView):
         )
 
         try:
-            print("About to send email for contact_id=%s", contact_id)
+            print(f"About to send email for contact_id={contact_id}")
 
             # # =================Send a notification email =============================================================
             result = send_mail(
@@ -160,7 +160,7 @@ class CreateContactRequestView(CreateAPIView):
                 fail_silently=False
             )
 
-            print("Email send result=%s for contact_id=%s", result, contact_id)
+            print(f"Email send result={result} for contact_id={contact_id}")
 
             # # ==================Send a auto-reply email to user ======================================================
             # auto_reply_subject = "Bags by Heidi" + " - Email Received! -->"
