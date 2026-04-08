@@ -79,7 +79,7 @@ admin.site.register(SocialMedia, SocialMediasAdmin)
 # ================================= customer feedback ===================================================
 class CustomerFeedbackAdmin(admin.ModelAdmin):
     list_display = ("id", "customer_name", "comment", "image", "published", "review_date")
-    search_fields = ['=customer_name']
+    search_fields = ['customer_name', "comment"]
 
 
 
@@ -89,7 +89,7 @@ admin.site.register(CustomerFeedback, CustomerFeedbackAdmin)
 # ================================= contact ===================================================
 class ContactRequestAdmin(admin.ModelAdmin):
     list_display = ('id', 'sender_email', "subject", 'message', 'created_at', "name", "solved" )
-    search_fields = ['=sender_email']
+    search_fields = ['=sender_email', "name", "subject", 'message']
 
 
 
@@ -107,6 +107,7 @@ admin.site.register(AboutPage, AboutPageAdmin)
 # # ================================= faqs page ===================================================
 class FaqAdmin(admin.ModelAdmin):
     list_display = ('id', 'question', 'answer')
+    search_fields = ["question", "answer"]
 
 
 admin.site.register(FAQ, FaqAdmin)
