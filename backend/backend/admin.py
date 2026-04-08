@@ -42,7 +42,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "description", "image", "category", 'material', "size", "price", "features", "is_available")
     inlines = [ProductImageInline]
     fields = ("title", "description", "image", "category", 'material', "size", "price", "features", "is_available")
-    search_fields = ['=title', "=category__category"]
+    search_fields = ['title', "category__category"]
 
 
 class ProductImageAdmin(admin.ModelAdmin):
