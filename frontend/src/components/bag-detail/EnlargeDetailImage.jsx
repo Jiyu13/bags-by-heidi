@@ -84,17 +84,15 @@ const Overlay = styled.div`
 
 const ModalContent = styled.div`
   position: relative;
-  width: min(100%, 1100px);
-  max-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-flex;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: 12px;
+  right: 12px;
   width: 3rem;
   height: 3rem;
   border: none;
@@ -103,8 +101,9 @@ const CloseButton = styled.button`
   color: black;
   font-size: 1.8rem;
   cursor: pointer;
-  z-index: 2;
+  z-index: 4;
 `;
+
 const NavButton = styled.button`
   position: absolute;
   top: 50%;
@@ -134,26 +133,29 @@ const NavImg = styled.img`
 `
 
 const ImageWrapper = styled.div`
-  width: 100%;
-  max-height: 90vh;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-flex;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
   overflow: hidden;
 `;
 
 const LargeImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
   display: block;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
 `;
 const Counter = styled.div`
   position: absolute;
-  bottom: -32px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
   font-size: 0.95rem;
 `;
+
